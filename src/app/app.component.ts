@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'controle-de-pagamentos-frontend';
+  menuOpened = true;
+
+  toggleMenu() {
+    this.menuOpened = !this.menuOpened;
+  }
+
 }
