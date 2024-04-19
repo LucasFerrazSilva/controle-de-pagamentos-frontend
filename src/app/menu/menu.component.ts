@@ -9,5 +9,27 @@ import { MatSidenav } from '@angular/material/sidenav';
 export class MenuComponent {
 
   isExpanded: boolean = true;
+  itensMenu = [
+    {
+      icon: 'schedule',
+      routerLink: '/horas-extras',
+      text: 'Horas extras'
+    },
+    {
+      icon: 'request_quote',
+      routerLink: '/notas-fiscais',
+      text: 'Notas fiscais'
+    },
+    {
+      icon: 'groups',
+      routerLink: '/prestadores',
+      text: 'Prestadores'
+    },
+    {
+      icon: 'tune',
+      routerLink: '/parametros',
+      text: 'Parâmetros'
+    },
+  ]
 
 }
