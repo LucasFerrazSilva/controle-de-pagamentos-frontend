@@ -15,6 +15,10 @@ mat-icon.menu-icon, #menu-list-title img {
     text-decoration: none;
 }
 
+#menu-list-title {
+    border-bottom: 1px solid lightgray;
+}
+
 #menu-list-title a {
     font-size: 1.2em;;
 }
