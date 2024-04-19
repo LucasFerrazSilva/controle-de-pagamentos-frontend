@@ -1,1 +1,29 @@
-<p>menu works!</p>
+<mat-nav-list id="menu-list" [class.removePadding]="!isExpanded">
+    <div>
+        <mat-list-item id="menu-list-title">
+            <img matListItemIcon src="/assets/images/forma-de-pagamento.png" />
+            <a matListItemTitle routerLink="/" *ngIf="isExpanded">Controle de Pagamentos</a>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon class="menu-icon" matListItemIcon>schedule</mat-icon>
+            <a matListItemTitle routerLink="/" *ngIf="isExpanded">Horas extras</a>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon class="menu-icon" matListItemIcon>request_quote</mat-icon>
+            <a matListItemTitle routerLink="/" *ngIf="isExpanded">Notas fiscais</a>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon class="menu-icon" matListItemIcon>groups</mat-icon>
+            <a matListItemTitle routerLink="/" *ngIf="isExpanded">Prestadores</a>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-icon class="menu-icon" matListItemIcon>tune</mat-icon>
+            <a matListItemTitle routerLink="/" *ngIf="isExpanded">Parâmetros</a>
+        </mat-list-item>
+    </div>
+    <div>
+        <mat-list-item id="menu-list-toggle" (click)="isExpanded = !isExpanded">
+            <mat-icon>{{ isExpanded ? 'keyboard_double_arrow_left' : 'keyboard_double_arrow_right' }}</mat-icon>
+        </mat-list-item>
+    </div>
+</mat-nav-list>

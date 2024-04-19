@@ -1,0 +1,28 @@
+#menu-list {
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0;
+}
+
+mat-icon.menu-icon, #menu-list-title img {
+    margin-left: 26px;
+}
+
+#menu-list a {
+    text-decoration: none;
+}
+
+#menu-list-title a {
+    font-size: 1.2em;;
+}
+
+#menu-list-toggle {
+    text-align: center;
+}
+
+.removePadding mat-list-item {
+    padding: 0;
+}
