@@ -1,1 +1,24 @@
-<p>toolbar works!</p>
+<div id="page-title">
+    <h1>{{ pageName }}</h1>
+</div>
+<div id="toolbar-icons">
+    <button mat-icon-button [matMenuTriggerFor]="notificationsMenu">
+        <mat-icon [matBadge]="notifications.length" matBadgeColor="warn" matBadgePosition="below">notifications</mat-icon>
+    </button>
+    <mat-menu #notificationsMenu="matMenu">
+        <button *ngFor="let notification of notifications" mat-menu-item>
+            <mat-icon class="notification-icon">{{notification.icon}}</mat-icon>
+            <span>{{notification.text}}</span>
+        </button>
+    </mat-menu>
+    
+    <button mat-mini-fab color="primary" [matMenuTriggerFor]="menu">
+        <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+            <mat-icon>logout</mat-icon>
+            <span>Sair</span>
+        </button>
+    </mat-menu>
+</div>

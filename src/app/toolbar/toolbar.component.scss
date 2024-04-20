@@ -1,0 +1,26 @@
+#page-title, #page-title h1 {
+    height: 60px;
+    display: flex;
+    align-items: center;
+}
+
+#page-title h1 {
+    margin: auto;
+    font-weight: 400;
+    font-size: 1.3em;
+}
+
+#toolbar-icons {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+.notification-icon {
+    padding: 5px;
+}
+
+button[mat-menu-item] {
+    padding: 5px 10px;
+}

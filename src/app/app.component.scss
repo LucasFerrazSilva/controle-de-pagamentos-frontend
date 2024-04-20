@@ -6,3 +6,10 @@ mat-sidenav-container {
 mat-sidenav-content {
     padding: 0 10px;
 }
+
+app-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
