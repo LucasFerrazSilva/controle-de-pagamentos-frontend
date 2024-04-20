@@ -9,6 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { MenuComponent } from './menu/menu.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import {MatIconModule} from '@angular/material/icon';
     BrowserAnimationsModule,
     MatSidenavModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

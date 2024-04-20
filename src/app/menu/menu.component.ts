@@ -13,7 +13,7 @@ export class MenuComponent {
     {
       icon: 'schedule',
       routerLink: '/horas-extras',
-      text: 'Horas extras'
+      text: 'Horas extras',
     },
     {
       icon: 'request_quote',

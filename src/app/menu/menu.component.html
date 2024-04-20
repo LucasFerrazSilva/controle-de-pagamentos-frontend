@@ -1,10 +1,10 @@
 <mat-nav-list id="menu-list" [class.removePadding]="!isExpanded">
     <div>
-        <mat-list-item id="menu-list-title">
+        <mat-list-item id="menu-list-title" [matTooltip]="isExpanded ? '' : 'Controle de Pagamentos'">
             <img matListItemIcon src="/assets/images/forma-de-pagamento.png" />
             <a matListItemTitle routerLink="/" *ngIf="isExpanded">Controle de Pagamentos</a>
         </mat-list-item>
-        <mat-list-item *ngFor="let item of itensMenu">
+        <mat-list-item *ngFor="let item of itensMenu" [matTooltip]="isExpanded ? '' : item.text">
             <mat-icon class="menu-icon" matListItemIcon>{{ item.icon }}</mat-icon>
             <a matListItemTitle [routerLink]="item.routerLink" *ngIf="isExpanded">{{ item.text }}</a>
         </mat-list-item>
