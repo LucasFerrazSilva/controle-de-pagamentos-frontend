@@ -6,7 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   menuOpened = true;
+  loggedUser = false;
 
   toggleMenu() {
     this.menuOpened = !this.menuOpened;

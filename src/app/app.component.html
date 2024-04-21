@@ -1,4 +1,4 @@
-<mat-sidenav-container autosize>
+<mat-sidenav-container autosize *ngIf="loggedUser; else loginPage">
   <mat-sidenav #sidenav mode="side" opened>
       <app-menu></app-menu>
   </mat-sidenav>
@@ -7,3 +7,6 @@
       <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+<ng-template #loginPage>
+  <app-login></app-login>
+</ng-template>
