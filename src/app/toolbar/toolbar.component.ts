@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -18,5 +19,13 @@ export class ToolbarComponent {
       text: 'Pagamento do mês efetuado'
     }
   ];
+
+  constructor(
+    private loginService: LoginService
+  ) {}
+
+  logout() {
+    this.loginService.logout();
+  }
 
 }

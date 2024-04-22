@@ -20,13 +20,17 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/mater
 import {MatInputModule} from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { LoadingComponent } from './commons/loading/loading.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     ToolbarComponent,
-    LoginComponent
+    LoginComponent,
+    LoadingComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

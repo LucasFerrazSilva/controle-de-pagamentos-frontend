@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LoginService } from './login.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginDTO } from './dto/login-dto.interface';
+import { TokenService } from '../auth/token.service';
+import { LoadingService } from '../commons/loading/loading.service';
 
 @Component({
   selector: 'app-login',
@@ -12,11 +14,10 @@ export class LoginComponent implements OnInit {
 
   hide = true;
   formGroup!: FormGroup;
-  loading = false;
 
   constructor(
     private loginService: LoginService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
   ) {}
 
   ngOnInit(): void {
@@ -31,18 +32,8 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    this.loading = true;
     const loginDTO: LoginDTO = this.formGroup.value;
-    this.loginService.login(loginDTO).subscribe({
-      next: resp => {
-        console.log(resp);
-        this.loading = false;
-      },
-      error: error => {
-        console.log(error);
-        this.loading = false;
-      }
-    });
+    this.loginService.login(loginDTO);
   }
 
 }
