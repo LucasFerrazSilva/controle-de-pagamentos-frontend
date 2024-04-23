@@ -8,6 +8,8 @@ import { User } from '../auth/user.interface';
 import { LoadingService } from '../commons/loading/loading.service';
 import { TokenService } from '../auth/token.service';
 import { Router } from '@angular/router';
+import { MessageDisplayerService } from '../commons/message-displayer/message-displayer.service';
+import { MessageType } from '../commons/message-displayer/message-type.enum';
 
 const BACKEND_URL = environment.apiUrl;
 const LOGIN_ENDPOINT = `${BACKEND_URL}/login`;
@@ -23,6 +25,7 @@ export class LoginService {
     private loadingService: LoadingService,
     private tokenService: TokenService,
     private router: Router,
+    private messageDisplayerService: MessageDisplayerService
   ) { }
 
   login(loginDto: LoginDTO) {
@@ -46,7 +49,8 @@ export class LoginService {
   }
 
   handleError(error: HttpErrorResponse) {
-    console.log(error); // TODO: mostrar mensagem na tela
+    console.log(error);
+    this.messageDisplayerService.emit({message: error.error.message, messageType: MessageType.ERROR});
     this.loadingService.emit(false);
   }
 

@@ -22,6 +22,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { LoadingComponent } from './commons/loading/loading.component';
 import { HomeComponent } from './home/home.component';
+import { MessageDisplayerComponent } from './commons/message-displayer/message-displayer.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { HomeComponent } from './home/home.component';
     ToolbarComponent,
     LoginComponent,
     LoadingComponent,
-    HomeComponent
+    HomeComponent,
+    MessageDisplayerComponent
   ],
   imports: [
     BrowserModule,
