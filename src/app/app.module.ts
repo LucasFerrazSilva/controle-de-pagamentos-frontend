@@ -18,11 +18,14 @@ import { LoginComponent } from './login/login.component';
 import {MatCardModule} from '@angular/material/card';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { LoadingComponent } from './commons/loading/loading.component';
 import { HomeComponent } from './home/home.component';
 import { MessageDisplayerComponent } from './commons/message-displayer/message-displayer.component';
+import { ParametrosComponent } from './parametros/parametros.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,8 @@ import { MessageDisplayerComponent } from './commons/message-displayer/message-d
     LoginComponent,
     LoadingComponent,
     HomeComponent,
-    MessageDisplayerComponent
+    MessageDisplayerComponent,
+    ParametrosComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,10 @@ import { MessageDisplayerComponent } from './commons/message-displayer/message-d
     MatInputModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatTableModule,
+    FormsModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
