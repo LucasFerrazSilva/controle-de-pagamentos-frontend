@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Observable } from 'rxjs';
+import { TokenService } from '../auth/token.service';
+import { User } from '../auth/user.interface';
 
 @Component({
   selector: 'app-menu',

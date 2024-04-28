@@ -48,7 +48,7 @@ export class TokenService {
     const tokenDecoded: any = jwt_decode(token);
     const user: User = {
       id: tokenDecoded.id,
-      nome: tokenDecoded.nome,
+      nome: tokenDecoded.name,
       email: tokenDecoded.sub,
       perfil: tokenDecoded.perfil
     }

@@ -23,6 +23,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { LoadingComponent } from './commons/loading/loading.component';
 import { HomeComponent } from './home/home.component';
 import { MessageDisplayerComponent } from './commons/message-displayer/message-displayer.component';
+import { HorasExtrasComponent } from './horas-extras/horas-extras.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MessageDisplayerComponent } from './commons/message-displayer/message-d
     LoginComponent,
     LoadingComponent,
     HomeComponent,
-    MessageDisplayerComponent
+    MessageDisplayerComponent,
+    HorasExtrasComponent
   ],
   imports: [
     BrowserModule,
