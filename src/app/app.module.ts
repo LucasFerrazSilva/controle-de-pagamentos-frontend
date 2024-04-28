@@ -24,6 +24,7 @@ import { LoadingComponent } from './commons/loading/loading.component';
 import { HomeComponent } from './home/home.component';
 import { MessageDisplayerComponent } from './commons/message-displayer/message-displayer.component';
 import { HorasExtrasComponent } from './horas-extras/horas-extras.component';
+import { RequestInterceptor } from './auth/request.interceptor';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,11 @@ import { HorasExtrasComponent } from './horas-extras/horas-extras.component';
     MatProgressSpinnerModule
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true
+    },
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
   ],
   bootstrap: [AppComponent],

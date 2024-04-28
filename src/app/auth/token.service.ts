@@ -22,8 +22,12 @@ export class TokenService {
     this.loggedUserSubject.next(this.convertTokenToUser(tokenDTO.token));
   }
 
+  getToken(): string | null {
+    return sessionStorage.getItem(TOKEN_KEY);
+  }
+
   hasToken(): boolean {
-    return !!sessionStorage.getItem(TOKEN_KEY);
+    return !!this.getToken();
   }
 
   removeToken() {
