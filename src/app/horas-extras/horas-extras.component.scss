@@ -1,0 +1,15 @@
+mat-card {
+    width: fit-content;
+    min-width: 80%;
+    margin: 10px auto;
+}
+
+#filters {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#btn-filter {
+    margin-top: 5px;
+}

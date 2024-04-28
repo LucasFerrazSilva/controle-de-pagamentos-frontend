@@ -7,6 +7,7 @@ import { HorasExtrasStatus } from './dto/horas-extras-status.enum';
 import { NovasHorasExtras } from './dto/novas-horas-extras.interface';
 import { AtualizarHorasExtras } from './dto/atualiar-horas-extras.interface';
 import { Page } from '../commons/pagination/page.interface';
+import { PaginationParameters } from '../commons/pagination/pagination-parameters.interface';
 
 const API_URL = environment.apiUrl;
 const ENDPOINT = API_URL + '/horas-extras';
@@ -20,11 +21,14 @@ export class HorasExtrasService {
     private http: HttpClient
   ) { }
 
-  list(status: HorasExtrasStatus): Observable<Page<HorasExtras>> {
+  list(status: HorasExtrasStatus, paginationParameters: PaginationParameters): Observable<Page<HorasExtras>> {
     const options = {
       params: new HttpParams({
         fromObject: {
-          status
+          status,
+          size: paginationParameters.size,
+          page: paginationParameters.page,
+          sort: paginationParameters.sort
         }
       })
     };
