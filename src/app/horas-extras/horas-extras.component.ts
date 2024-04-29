@@ -38,12 +38,9 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
 
   ngAfterViewInit(): void {
     this.list();
-    this.paginator.page.subscribe(() => this.list());
   }
 
   list() {
-    console.log(this.paginator);
-    console.log(this.sort);
     this.loadingService.emit(true);
 
     let paginationParameters: PaginationParameters = {
@@ -51,8 +48,6 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
       page: this.paginator.pageIndex,
       sort: `${this.sort.active},${this.sort.direction}`
     };
-
-    console.log(paginationParameters);
 
     this.service.list(this.statusSelected, paginationParameters).subscribe({
       next: resp => this.loadData(resp),
@@ -69,7 +64,6 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
     this.paginator.length = page.totalElements;
     this.paginator.pageIndex = page.pageable.pageNumber;
     this.paginator.pageSize = page.pageable.pageSize;
-    
   }
 
 }
