@@ -3,6 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ParametroDTO } from './dto/ParametroDTO.interface';
 import { ParametrosService } from './parametros.service';
 import { LoadingService } from '../commons/loading/loading.service';
+import { NovoParametroComponent } from './novo-parametro/novo-parametro.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ExcluirParametroComponent } from './excluir-parametro/excluir-parametro.component';
 
 @Component({
   selector: 'app-parametros',
@@ -20,12 +23,13 @@ export class ParametrosComponent implements OnInit {
   pageIndex: number = 0;
   nome: string = "";
   valor: string = "";
+  status: string = 'ATIVO';
   formGroup!: FormGroup;
 
   constructor(
     private parametrosService: ParametrosService,
     private loadingService: LoadingService, 
-    private formBuilder: FormBuilder,
+    private dialog: MatDialog
   ){
 
   }
@@ -35,30 +39,74 @@ export class ParametrosComponent implements OnInit {
   }
 
   getParametros(pagina: number, tamanho: number, nome: string, valor: string){
-    this.parametrosService.getParametros(pagina, tamanho, nome, valor).subscribe(parametros => {
+    this.dataSource = [];
+    this.parametrosService.get(pagina, tamanho, nome, valor, this.status).subscribe(parametros => {
       this.dataSource = parametros.content;
       this.loadingService.emit(false);
     });
   }
 
   onPageChange(event : any): void {
-    console.log("mudou?");
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
   }
 
   onSubmit() {
-    this.dataSource = [];
-    console.log(this.nome);
+      console.log(this.nome);
     this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
   }
 
-  editar(parametro: any) {
+  adicionarParametro(){
+    let dialogRef = this.dialog.open(NovoParametroComponent, {
+      height: 'auto',
+      width: '40%',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.parametrosService.create(result);
+        this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
+      } 
+    });
+    
+  }
+  editar(updateParametroDTO: any) {
+    let dialogRef = this.dialog.open(NovoParametroComponent, {
+      height: 'auto',
+      width: '40%',
+      data: { updateParametroDTO },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.parametrosService.update(result);
+      } 
+    });
+    
+    
+    this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
     
   }
 
-  excluir(parametro: any) {
+  excluir(id: number) {
+    const dialogRef = this.dialog.open(ExcluirParametroComponent, {
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataSource = [];
+        this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
+        this.parametrosService.delete(id)
+      } 
+    });
     
+  }
+
+  alternarEstado(): void {
+    this.status = this.status === 'ATIVO' ? 'INATIVO' : 'ATIVO';
+    this.dataSource = [];
+    this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
   }
 }

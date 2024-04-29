@@ -5,11 +5,12 @@
                   <mat-label>Nome</mat-label>
                   <input matInput required [(ngModel)]="nome" placeholder="nome">
               </mat-form-field>
+              <button mat-flat-button (click)="alternarEstado()">Estado: {{ status }}</button>
               <button mat-flat-button (click)="onSubmit()">Pesquisar</button>
             
             <br><br>
 
-            <button mat-raised-button color="primary">Adicionar</button>
+            <button mat-raised-button color="primary"  (click)="adicionarParametro()">Adicionar</button>
               
             <table mat-table [dataSource]="dataSource">
                 <ng-container matColumnDef="nome">
@@ -26,7 +27,7 @@
                     <button mat-icon-button (click)="editar(parametro)">
                       <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-icon-button (click)="excluir(parametro)">
+                    <button mat-icon-button (click)="excluir(parametro.id)">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </td>

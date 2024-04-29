@@ -26,6 +26,10 @@ import { MessageDisplayerComponent } from './commons/message-displayer/message-d
 import { ParametrosComponent } from './parametros/parametros.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
+import { NovoParametroComponent } from './parametros/novo-parametro/novo-parametro.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ExcluirParametroComponent } from './parametros/excluir-parametro/excluir-parametro.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,9 @@ import {MatTableModule} from '@angular/material/table';
     LoadingComponent,
     HomeComponent,
     MessageDisplayerComponent,
-    ParametrosComponent
+    ParametrosComponent,
+    NovoParametroComponent,
+    ExcluirParametroComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +63,9 @@ import {MatTableModule} from '@angular/material/table';
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatTableModule,
-    FormsModule
+    FormsModule,
+    MatDialogModule,
+    MatSlideToggleModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}

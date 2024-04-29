@@ -1,0 +1,22 @@
+<mat-card>
+    <mat-card-content>
+        <form #novoParametroForm [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+            <mat-form-field>
+                <input matInput placeholder="Nome" [(ngModel)]="nome" name="nome" formControlName="nome" required>
+                <mat-error>
+                Por favor insira um nome válido
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput  placeholder="Valor" [(ngModel)]="valor" name="valor" formControlName="valor" required>
+                <mat-error>
+                Por favor insira um valor válido
+                </mat-error>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-action-list class="actions-container">
+        <button mat-raised-button color="primary" type="submit">Criar</button>
+        <button mat-button (click)="cancelar()">Cancelar</button>
+    </mat-action-list>
+</mat-card>
