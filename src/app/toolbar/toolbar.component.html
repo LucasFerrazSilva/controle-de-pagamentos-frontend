@@ -16,6 +16,7 @@
         <mat-icon>person</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+        <p *ngIf="(user$ | async) as user" id="user-name-item" mat-menu-item>{{ user.nome }}</p>
         <button mat-menu-item (click)="logout()">
             <mat-icon>logout</mat-icon>
             <span>Sair</span>

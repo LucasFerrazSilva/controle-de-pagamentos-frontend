@@ -23,13 +23,18 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { LoadingComponent } from './commons/loading/loading.component';
 import { HomeComponent } from './home/home.component';
 import { MessageDisplayerComponent } from './commons/message-displayer/message-displayer.component';
-import { ParametrosComponent } from './parametros/parametros.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatTableModule} from '@angular/material/table';
-import { NovoParametroComponent } from './parametros/novo-parametro/novo-parametro.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ExcluirParametroComponent } from './parametros/excluir-parametro/excluir-parametro.component';
+import { HorasExtrasComponent } from './horas-extras/horas-extras.component';
+import { RequestInterceptor } from './auth/request.interceptor';
+import {MatSelectModule} from '@angular/material/select';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+import { MyCustomPaginatorIntl } from './commons/pagination/paginator-intl';
+import { ParametrosComponent } from './parametros/parametros.component';
+import { NovoParametroComponent } from './parametros/novo-parametro/novo-parametro.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +45,7 @@ import { ExcluirParametroComponent } from './parametros/excluir-parametro/exclui
     LoadingComponent,
     HomeComponent,
     MessageDisplayerComponent,
+    HorasExtrasComponent,
     ParametrosComponent,
     NovoParametroComponent,
     ExcluirParametroComponent
@@ -65,10 +71,20 @@ import { ExcluirParametroComponent } from './parametros/excluir-parametro/exclui
     MatTableModule,
     FormsModule,
     MatDialogModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSelectModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}}
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true
+    },
+    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
+    {provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl}
   ],
   bootstrap: [AppComponent],
 })

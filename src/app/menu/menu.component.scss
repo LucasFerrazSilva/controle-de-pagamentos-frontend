@@ -5,19 +5,29 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 0;
+    
+    background: rgb(74, 99, 243);
+    background: linear-gradient(145deg, rgb(61, 75, 155) 0%, rgb(0, 4, 24) 100%);
 }
 
 mat-icon.menu-icon, #menu-list-title img {
     margin-left: 26px;
 }
 
+mat-icon, mat-list-item > mat-icon, mat-list-item > mat-icon:hover, mat-list-item:hover > * {
+    color: white;
+}
+
 #menu-list a {
     text-decoration: none;
+    color: white;
 }
 
 #menu-list-title {
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid #ccc;
     height: 60px;
+    text-align: center;
+    
 }
 
 #menu-list-title a {

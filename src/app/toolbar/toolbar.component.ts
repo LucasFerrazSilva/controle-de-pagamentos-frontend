@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { LoginService } from '../login/login.service';
+import { Observable } from 'rxjs';
+import { TokenService } from '../auth/token.service';
+import { User } from '../auth/user.interface';
+import { ToolbarService } from './toolbar.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -19,10 +23,16 @@ export class ToolbarComponent {
       text: 'Pagamento do mês efetuado'
     }
   ];
+  user$: Observable<User | null>;
 
   constructor(
-    private loginService: LoginService
-  ) {}
+    private loginService: LoginService,
+    service: ToolbarService,
+    tokenService: TokenService
+  ) {
+    this.user$ = tokenService.getLoggedUserObservable();
+    service.pageNameSubject.subscribe(pageName => this.pageName = pageName);
+  }
 
   logout() {
     this.loginService.logout();

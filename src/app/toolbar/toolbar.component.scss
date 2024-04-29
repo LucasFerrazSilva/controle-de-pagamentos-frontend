@@ -24,3 +24,11 @@
 button[mat-menu-item] {
     padding: 5px 10px;
 }
+
+#user-name-item {
+    cursor: default;
+}
+
+#user-name-item:hover {
+    background-color: white;
+}
