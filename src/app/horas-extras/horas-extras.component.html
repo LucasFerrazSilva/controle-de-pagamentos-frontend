@@ -2,8 +2,50 @@
     <mat-card-content>
         <div id="filters">
             <mat-form-field>
+                <mat-label>Prestador</mat-label>
+                <mat-select [(value)]="filtros.idUsuario">
+                    <mat-option *ngFor="let prestador of prestadores" [value]="prestador.id">
+                        {{ prestador.nome }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Início</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="inicio" disabled>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker disabled="false"></mat-datepicker>
+                <button *ngIf="inicio" matSuffix mat-icon-button aria-label="Clear" (click)="inicio=null">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Fim</mat-label>
+                <input matInput [matDatepicker]="pickerFim" [(ngModel)]="fim" disabled>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerFim"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFim disabled="false"></mat-datepicker>
+                <button *ngIf="fim" matSuffix mat-icon-button aria-label="Clear" (click)="fim=null">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Descrição</mat-label>
+                <input matInput [(ngModel)]="filtros.descricao">
+                <button *ngIf="filtros.descricao" matSuffix mat-icon-button aria-label="Clear"
+                    (click)="filtros.descricao=''">
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Aprovador</mat-label>
+                <mat-select [(value)]="filtros.idAprovador">
+                    <mat-option *ngFor="let aprovador of aprovadores" [value]="aprovador.id">
+                        {{ aprovador.nome }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field>
                 <mat-label>Status</mat-label>
-                <mat-select [(value)]="statusSelected">
+                <mat-select [(value)]="filtros.status">
                     <mat-option *ngFor="let status of allStatus" [value]="status">
                         {{status | titlecase }}
                     </mat-option>

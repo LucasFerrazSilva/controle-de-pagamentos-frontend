@@ -21,19 +21,22 @@ export class HorasExtrasService {
     private http: HttpClient
   ) { }
 
-  list(status: HorasExtrasStatus, paginationParameters: PaginationParameters): Observable<Page<HorasExtras>> {
-    const options = {
-      params: new HttpParams({
-        fromObject: {
-          status,
-          size: paginationParameters.size,
-          page: paginationParameters.page,
-          sort: paginationParameters.sort
-        }
-      })
-    };
+  list(filtros: any, paginationParameters: PaginationParameters): Observable<Page<HorasExtras>> {
+    let params = new HttpParams({
+      fromObject: {
+        size: paginationParameters.size,
+        page: paginationParameters.page,
+        sort: paginationParameters.sort
+      }
+    });
 
-    return this.http.get<Page<HorasExtras>>(ENDPOINT, options);
+    for (let filtro in filtros) {
+      let valor = filtros[filtro];
+      if(valor)
+        params = params.set(filtro, valor);
+    }
+
+    return this.http.get<Page<HorasExtras>>(ENDPOINT, { params });
   }
 
   create(dto: NovasHorasExtras) {
