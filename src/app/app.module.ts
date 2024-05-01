@@ -35,7 +35,6 @@ import {MatSortModule} from '@angular/material/sort';
 import { MyCustomPaginatorIntl } from './commons/pagination/paginator-intl';
 import { ParametrosComponent } from './parametros/parametros.component';
 import { NovoParametroComponent } from './parametros/novo-parametro/novo-parametro.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +49,6 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ParametrosComponent,
     NovoParametroComponent,
     ExcluirParametroComponent,
-    NotFoundComponent
   ],
   imports: [
     BrowserModule,
