@@ -4,6 +4,7 @@ import { authGuard } from './auth/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { HorasExtrasComponent } from './horas-extras/horas-extras.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [authGuard], data: { role: 'ROLE_ADMIN' } },

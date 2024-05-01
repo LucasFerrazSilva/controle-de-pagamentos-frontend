@@ -34,6 +34,7 @@ import { FormsModule } from '@angular/forms';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 
@@ -46,7 +47,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     LoadingComponent,
     HomeComponent,
     MessageDisplayerComponent,
-    HorasExtrasComponent
+    HorasExtrasComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
