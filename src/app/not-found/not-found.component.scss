@@ -1,0 +1,12 @@
+mat-card {
+    width: fit-content;
+    min-width: 80%;
+    min-height: 80%;
+    margin: 10px auto;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+mat-card-content{
+    margin-bottom: 20px;
+}
