@@ -1,8 +1,12 @@
-<div>
-    <h2 mat-dialog-title>Confirmação de Exclusão</h2>
-    <mat-dialog-content>Deseja realmente excluir o parametro?</mat-dialog-content>
-    <mat-dialog-actions class="actions-container">
-        <button mat-raised-button [mat-dialog-close]="true">Sim</button>
-        <button mat-button [mat-dialog-close]="false">Não</button>
-    </mat-dialog-actions>
-</div>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Confirmação de Exclusão</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        Deseja realmente excluir o parametro?
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button [mat-dialog-close]="true" color="warn">Sim</button>
+        <button mat-stroked-button [mat-dialog-close]="false">Não</button>
+    </mat-card-actions>
+</mat-card>

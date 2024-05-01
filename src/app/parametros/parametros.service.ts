@@ -11,6 +11,8 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { MessageType } from '../commons/message-displayer/message-type.enum';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateParametroDTO } from './dto/updateParametroDTO.interface';
+import { PaginationParameters } from '../commons/pagination/pagination-parameters.interface';
+import { Page } from '../commons/pagination/page.interface';
 
 const BACKEND_URL = environment.apiUrl;
 const PARAMETRO_ENDPOINT = `${BACKEND_URL}/parametros`;
@@ -28,38 +30,32 @@ export class ParametrosService {
     private messageDisplayerService: MessageDisplayerService,
   ) { }
 
-  private buildHeadersWithToken() {
-    const token = sessionStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return headers;
-  }
-
-  get(pagina: number, tamanho: number, nome: string, valor: string, status: string): Observable<{content: ParametroDTO[], totalElements: number, totalPages: number}>{
-    const headers = this.buildHeadersWithToken();
-    let params = new HttpParams()
-      .set('page', pagina.toString())
-      .set('size', tamanho.toString())
-      .set('status', status);
-
-    if (nome){
-      params = params.set('nome', nome);
+  list(filtros: any, paginationParameters: PaginationParameters): Observable<Page<ParametroDTO>> {
+      let params = new HttpParams({
+        fromObject: {
+          size: paginationParameters.size,
+          page: paginationParameters.page,
+          sort: paginationParameters.sort
+        }
+      });
+    for (let filtro in filtros) {
+      let valor = filtros[filtro];
+      if(valor)
+        params = params.set(filtro, valor);
     }
-    return this.httpClient.get<{ content: ParametroDTO[], totalElements: number, totalPages: number }>(PARAMETRO_ENDPOINT , { headers, params }).pipe(
-      catchError(error => this.handleError(error)));
+    return this.httpClient.get<Page<ParametroDTO>>(PARAMETRO_ENDPOINT, { params });
   }
 
   create(novoParametroDTO: NovoParametroDTO){
-    const headers = this.buildHeadersWithToken();
-    const req = this.httpClient.post<NovoParametroDTO>(PARAMETRO_ENDPOINT, novoParametroDTO, { headers });
+    const req = this.httpClient.post<NovoParametroDTO>(PARAMETRO_ENDPOINT, novoParametroDTO);
     req.subscribe({
       next: data => { console.log('Parametro publicado', data.nome); this.loadingService.emit(false); },
       error: err => this.handleError(err)
     });
    }
 
-   update(updateParametroDTO: UpdateParametroDTO){
-    const headers = this.buildHeadersWithToken();
-    const req = this.httpClient.put<UpdateParametroDTO>(PARAMETRO_ENDPOINT, updateParametroDTO, { headers });
+   update(id:number, updateParametroDTO: UpdateParametroDTO){
+    const req = this.httpClient.put<UpdateParametroDTO>(`${PARAMETRO_ENDPOINT}/${id}`, updateParametroDTO);
     req.subscribe({
       next: data => { console.log('Parametro atualizado', data.nome); this.loadingService.emit(false); },
       error: err => this.handleError(err)
@@ -67,9 +63,8 @@ export class ParametrosService {
    }
 
   delete(id: number){
-    const headers = this.buildHeadersWithToken();
     const deleteUrl = `${PARAMETRO_ENDPOINT}/${id}`;
-    const req = this.httpClient.delete(deleteUrl, { headers });
+    const req = this.httpClient.delete(deleteUrl);
     req.subscribe({
       next: () => { console.log('deletado') },
       error: err => console.log('Erro ao deletar', err)

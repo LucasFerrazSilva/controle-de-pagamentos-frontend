@@ -6,6 +6,7 @@ import { LoginComponent } from './login/login.component';
 import { HorasExtrasComponent } from './horas-extras/horas-extras.component';
 import { ParametrosComponent } from './parametros/parametros.component';
 import { NovoParametroComponent } from './parametros/novo-parametro/novo-parametro.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [authGuard], data: { role: 'ROLE_ADMIN' } },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'parametros', component: ParametrosComponent, canActivate: [authGuard],
     children: [{ path: 'novoParametro', component: NovoParametroComponent}]
   },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

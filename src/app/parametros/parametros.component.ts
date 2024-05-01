@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ParametroDTO } from './dto/ParametroDTO.interface';
 import { ParametrosService } from './parametros.service';
@@ -6,6 +6,13 @@ import { LoadingService } from '../commons/loading/loading.service';
 import { NovoParametroComponent } from './novo-parametro/novo-parametro.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ExcluirParametroComponent } from './excluir-parametro/excluir-parametro.component';
+import { ToolbarService } from '../toolbar/toolbar.service';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { Page } from '../commons/pagination/page.interface';
+import { PaginationParameters } from '../commons/pagination/pagination-parameters.interface';
+import { MatTableDataSource } from '@angular/material/table';
+import { ParametroStatus } from './dto/ParametroStatus.enum';
 
 @Component({
   selector: 'app-parametros',
@@ -14,47 +21,60 @@ import { ExcluirParametroComponent } from './excluir-parametro/excluir-parametro
 })
 export class ParametrosComponent implements OnInit {
 
-  searchQuery: string = "";
-  dataSource: ParametroDTO[] = []; 
+  page: Page<ParametroDTO>  | undefined;
+  allStatus = Object.keys(ParametroStatus);
+  statusSelected = ParametroStatus.ATIVO;
+  dataSource!: MatTableDataSource<ParametroDTO>;
   displayedColumns: string[] = ['nome', 'valor', 'acoes'];
-  totalItems: number = 100; 
-  pageSize: number = 10; 
-  pageSizeOptions: number[] = [5, 10, 25, 100]; 
-  pageIndex: number = 0;
-  nome: string = "";
-  valor: string = "";
   status: string = 'ATIVO';
   formGroup!: FormGroup;
+  filtros = { 
+    nome: '',
+    valor: '',
+    status: ParametroStatus.ATIVO
+   };
 
   constructor(
     private parametrosService: ParametrosService,
     private loadingService: LoadingService, 
-    private dialog: MatDialog
-  ){
+    private dialog: MatDialog,
+    private toolbarService: ToolbarService,
+  ){}
 
-  }
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   ngOnInit(){
-    this.getParametros(0, 10, "", "");
+    this.toolbarService.emitPageName("Parametros");
   }
 
-  getParametros(pagina: number, tamanho: number, nome: string, valor: string){
-    this.dataSource = [];
-    this.parametrosService.get(pagina, tamanho, nome, valor, this.status).subscribe(parametros => {
-      this.dataSource = parametros.content;
-      this.loadingService.emit(false);
+  ngAfterViewInit(): void {
+    this.list();
+  }
+
+  list() {
+    this.loadingService.emit(true);
+
+    let paginationParameters: PaginationParameters = {
+      size: this.paginator.pageSize,
+      page: this.paginator.pageIndex,
+      sort: ``
+    };
+
+    this.parametrosService.list(this.filtros, paginationParameters).subscribe({
+      next: resp => this.loadData(resp),
+      error: err => console.log(err),
+      complete: () => this.loadingService.emit(false)
     });
   }
 
-  onPageChange(event : any): void {
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
-    this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
-  }
+  loadData(page: Page<ParametroDTO>) {
+    this.page = page;
+    this.dataSource = new MatTableDataSource(page.content);
 
-  onSubmit() {
-      console.log(this.nome);
-    this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
+    this.paginator.length = page.totalElements;
+    this.paginator.pageIndex = page.pageable.pageNumber;
+    this.paginator.pageSize = page.pageable.pageSize;
   }
 
   adicionarParametro(){
@@ -65,27 +85,26 @@ export class ParametrosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.parametrosService.create(result);
-        this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
+        this.list();
       } 
     });
     
   }
-  editar(updateParametroDTO: any) {
+  editar(parametroDTO: ParametroDTO) {
     let dialogRef = this.dialog.open(NovoParametroComponent, {
       height: 'auto',
       width: '40%',
-      data: { updateParametroDTO },
+      data: parametroDTO
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.parametrosService.update(result);
+        this.list();
       } 
     });
     
     
-    this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
+    this.list();
     
   }
 
@@ -96,17 +115,15 @@ export class ParametrosComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.dataSource = [];
-        this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
         this.parametrosService.delete(id)
       } 
+      this.list();
     });
     
   }
 
   alternarEstado(): void {
     this.status = this.status === 'ATIVO' ? 'INATIVO' : 'ATIVO';
-    this.dataSource = [];
-    this.getParametros(this.pageIndex, this.pageSize, this.nome, this.valor);
+    this.list();
   }
 }

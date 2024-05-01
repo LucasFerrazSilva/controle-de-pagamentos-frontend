@@ -1,8 +1,16 @@
-.actions-container {
+  .actions-container {
     display: flex;
     justify-content: center;
-}
+  }
 
-button{
-    margin-left:20px;
-}
+  mat-card-actions {
+    display:flex;
+    gap:5px;
+  }
+
+  button {
+    width: 100%;
+  }
+  mat-card-header {
+    margin-bottom: 10px;
+  }

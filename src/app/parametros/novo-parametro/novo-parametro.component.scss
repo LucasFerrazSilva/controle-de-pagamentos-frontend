@@ -2,3 +2,16 @@
   mat-form-field {
     display: flex;
   }
+
+  mat-card-actions {
+    display:flex;
+    gap:5px;
+  }
+
+  button {
+    width: 100%;
+  }
+
+  mat-card-header {
+    margin-bottom: 10px;
+  }
