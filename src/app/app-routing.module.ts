@@ -12,10 +12,10 @@ const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [authGuard], data: { role: 'ROLE_ADMIN' } },
   { path: 'horas-extras', component: HorasExtrasComponent, canActivate: [authGuard], data: { role: 'X' } },
   { path: 'login', component: LoginComponent },
-  { path: '**', component: NotFoundComponent },
   { path: 'parametros', component: ParametrosComponent, canActivate: [authGuard],
     children: [{ path: 'novoParametro', component: NovoParametroComponent}]
   },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({
