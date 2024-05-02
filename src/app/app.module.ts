@@ -18,11 +18,14 @@ import { LoginComponent } from './login/login.component';
 import {MatCardModule} from '@angular/material/card';
 import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { LoadingComponent } from './commons/loading/loading.component';
 import { HomeComponent } from './home/home.component';
 import { MessageDisplayerComponent } from './commons/message-displayer/message-displayer.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ExcluirParametroComponent } from './parametros/excluir-parametro/excluir-parametro.component';
 import { HorasExtrasComponent } from './horas-extras/horas-extras.component';
 import { RequestInterceptor } from './auth/request.interceptor';
 import {MatSelectModule} from '@angular/material/select';
@@ -30,7 +33,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
 import { MyCustomPaginatorIntl } from './commons/pagination/paginator-intl';
-import { FormsModule } from '@angular/forms';
+import { ParametrosComponent } from './parametros/parametros.component';
+import { NovoParametroComponent } from './parametros/novo-parametro/novo-parametro.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -46,7 +50,10 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     LoadingComponent,
     HomeComponent,
     MessageDisplayerComponent,
-    HorasExtrasComponent
+    HorasExtrasComponent,
+    ParametrosComponent,
+    NovoParametroComponent,
+    ExcluirParametroComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +72,11 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     ReactiveFormsModule,
     HttpClientModule,
     MatProgressSpinnerModule,
+    MatPaginatorModule,
+    MatTableModule,
+    FormsModule,
+    MatDialogModule,
+    MatSlideToggleModule,
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,

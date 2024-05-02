@@ -1,0 +1,54 @@
+<div>
+    <mat-card>
+        <mat-card-content>
+            <div id="filters">
+              <mat-form-field>
+                  <mat-label>Nome</mat-label>
+                  <input matInput required [(ngModel)]="filtros.nome" placeholder="nome">
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>Valor</mat-label>
+                <input matInput required [(ngModel)]="filtros.valor" placeholder="valor">
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>Status</mat-label>
+              <mat-select [(value)]="filtros.status">
+                  <mat-option *ngFor="let status of allStatus" [value]="status">
+                      {{status | titlecase }}
+                  </mat-option>
+              </mat-select>
+            </mat-form-field>
+              <button id="btn-filter" mat-fab extended type="button" (click)="list()"
+                color="primary"><mat-icon>search</mat-icon> Pesquisar</button>
+            </div>
+            <br><br>
+
+            <button mat-raised-button color="primary"  (click)="adicionarParametro()">Adicionar</button>
+              
+            <table mat-table [dataSource]="dataSource"
+            (matSortChange)="list()">
+                <ng-container matColumnDef="nome">
+                    <th mat-header-cell *matHeaderCellDef> Nome </th>
+                    <td mat-cell *matCellDef="let parametro"> {{parametro.nome}} </td>
+                </ng-container>
+                <ng-container matColumnDef="valor">
+                    <th mat-header-cell *matHeaderCellDef> Valor </th>
+                    <td mat-cell *matCellDef="let parametro"> {{parametro.valor}} </td>
+                </ng-container>
+                <ng-container matColumnDef="acoes">
+                  <th mat-header-cell *matHeaderCellDef> Ações </th>
+                  <td mat-cell *matCellDef="let parametro">
+                    <button mat-icon-button color="primary" matTooltip="Editar" (click)="editar(parametro)"><mat-icon>edit</mat-icon></button>
+                        <button mat-icon-button color="warn" matTooltip="Excluir" (click)="excluir(parametro.id)"><mat-icon>delete</mat-icon></button>
+                  </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+              
+              <mat-paginator [pageSize]="10" (page)="list()" [pageSizeOptions]="[5, 10, 25, 100]"
+                aria-label="Select page of parametros" [showFirstLastButtons]="true"></mat-paginator>
+        </mat-card-content>
+    </mat-card>
+</div>
