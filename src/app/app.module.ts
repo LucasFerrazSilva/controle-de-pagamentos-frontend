@@ -35,6 +35,11 @@ import {MatSortModule} from '@angular/material/sort';
 import { MyCustomPaginatorIntl } from './commons/pagination/paginator-intl';
 import { ParametrosComponent } from './parametros/parametros.component';
 import { NovoParametroComponent } from './parametros/novo-parametro/novo-parametro.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
+
 
 @NgModule({
   declarations: [
@@ -75,16 +80,22 @@ import { NovoParametroComponent } from './parametros/novo-parametro/novo-paramet
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    FormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatAutocompleteModule
   ],
   providers: [
+    MatNativeDateModule,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptor,
       multi: true
     },
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
-    {provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl}
+    {provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl},
+    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
   ],
   bootstrap: [AppComponent],
 })

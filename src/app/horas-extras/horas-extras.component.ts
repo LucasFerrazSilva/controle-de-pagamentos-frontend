@@ -9,6 +9,9 @@ import { ToolbarService } from '../toolbar/toolbar.service';
 import { HorasExtrasStatus } from './dto/horas-extras-status.enum';
 import { HorasExtras } from './dto/horas-extras.interface';
 import { HorasExtrasService } from './horas-extras.service';
+import { PrestadoresService } from '../prestadores/prestadores.service';
+import { UserPerfil } from '../auth/user-perfil.enum';
+import { User } from '../auth/user.interface';
 
 @Component({
   selector: 'app-horas-extras',
@@ -22,6 +25,18 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   page: Page<HorasExtras> | undefined;
   displayedColumns: string[] = ['user.nome', 'dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'];
   dataSource!: MatTableDataSource<HorasExtras>;
+  inicio: Date | null = null;
+  fim: Date | null = null;
+  prestadores: User[] | undefined;
+  aprovadores: User[] | undefined;
+  filtros = {
+    status: HorasExtrasStatus.SOLICITADO,
+    descricao: '',
+    dataInicio: '',
+    dataFim: '',
+    idUsuario: '',
+    idAprovador: ''
+  };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -29,11 +44,14 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   constructor(
     private service: HorasExtrasService,
     private toolbarService: ToolbarService,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private prestadoresService: PrestadoresService
   ) {}
 
   ngOnInit(): void {
     this.toolbarService.emitPageName("Horas extras");
+    this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_USER).subscribe(data => this.prestadores = data);
+    this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_GESTOR).subscribe(data => this.aprovadores = data);
   }
 
   ngAfterViewInit(): void {
@@ -43,13 +61,16 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   list() {
     this.loadingService.emit(true);
 
+    this.filtros.dataInicio = this.inicio? this.inicio.toLocaleDateString('pt-BR') : '';
+    this.filtros.dataFim = this.fim? this.fim.toLocaleDateString('pt-BR') : '';
+
     let paginationParameters: PaginationParameters = {
       size: this.paginator.pageSize,
       page: this.paginator.pageIndex,
       sort: `${this.sort.active},${this.sort.direction}`
     };
 
-    this.service.list(this.statusSelected, paginationParameters).subscribe({
+    this.service.list(this.filtros, paginationParameters).subscribe({
       next: resp => this.loadData(resp),
       error: err => console.log(err),
       complete: () => this.loadingService.emit(false)
@@ -57,7 +78,6 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   }
 
   loadData(page: Page<HorasExtras>) {
-    console.log(page);
     this.page = page;
     this.dataSource = new MatTableDataSource(page.content);
 
