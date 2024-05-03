@@ -8,6 +8,9 @@
                         {{ prestador.nome }}
                     </mat-option>
                 </mat-select>
+                <button *ngIf="filtros.idUsuario" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.idUsuario=''">
+                    <mat-icon>close</mat-icon>
+                </button>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Início</mat-label>
@@ -42,6 +45,9 @@
                         {{ aprovador.nome }}
                     </mat-option>
                 </mat-select>
+                <button *ngIf="filtros.idAprovador" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.idAprovador=''">
+                    <mat-icon>close</mat-icon>
+                </button>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Status</mat-label>
@@ -92,8 +98,8 @@
                 <ng-container matColumnDef="acoes">
                     <th mat-header-cell *matHeaderCellDef> Ações </th>
                     <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button color="primary" matTooltip="Editar"><mat-icon>edit</mat-icon></button>
-                        <button mat-icon-button color="warn" matTooltip="Excluir"><mat-icon>delete</mat-icon></button>
+                        <button mat-icon-button color="primary" matTooltip="Editar" *ngIf="row.status != 'INATIVO'"><mat-icon>edit</mat-icon></button>
+                        <button mat-icon-button color="warn" matTooltip="Excluir" *ngIf="row.status != 'INATIVO'" (click)="delete(row)"><mat-icon>delete</mat-icon></button>
                     </td>
                 </ng-container>
 
