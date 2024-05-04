@@ -40,6 +40,7 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { DialogConfirmComponent } from './commons/dialog-confirm/dialog-confirm.component';
+import { DialogHorasExtrasComponent } from './horas-extras/dialog-horas-extras/dialog-horas-extras.component';
 
 
 
@@ -58,6 +59,7 @@ import { DialogConfirmComponent } from './commons/dialog-confirm/dialog-confirm.
     NovoParametroComponent,
     ExcluirParametroComponent,
     DialogConfirmComponent,
+    DialogHorasExtrasComponent,
   ],
   imports: [
     BrowserModule,
@@ -99,7 +101,7 @@ import { DialogConfirmComponent } from './commons/dialog-confirm/dialog-confirm.
     },
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
     {provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl},
-    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent],
 })

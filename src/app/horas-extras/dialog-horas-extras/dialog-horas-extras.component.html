@@ -1,0 +1,31 @@
+<h1 mat-dialog-title>{{ horasExtras ? 'Atualizar' : 'Cadastrar' }} Horas Extras</h1>
+<mat-dialog-content>
+    <form #form [formGroup]="formGroup" (ngSubmit)="submit()">
+        <mat-form-field>
+            <mat-label>Início</mat-label>
+            <input matInput type="datetime-local" autofocus formControlName="dataHoraInicio" (blur)="calcularTotalHoras()">
+        </mat-form-field>     
+        <mat-form-field>
+            <mat-label>Fim</mat-label>
+            <input matInput type="datetime-local" formControlName="dataHoraFim" (blur)="calcularTotalHoras()">
+        </mat-form-field>   
+        <mat-form-field>
+            <mat-label>Aprovador</mat-label>
+            <mat-select formControlName="idAprovador">
+                <mat-option *ngFor="let aprovador of aprovadores" [value]="aprovador.id">
+                    {{ aprovador.nome }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field> 
+        <mat-form-field>
+            <mat-label>Descrição</mat-label>
+            <textarea matInput type="text" formControlName="descricao"></textarea>
+        </mat-form-field>
+        <p>Total: {{ totalHoras }}</p>
+        <input type="submit" hidden />
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button (click)="submit()" color="primary" cdkFocusInitial>Salvar</button>
+  <button mat-stroked-button [mat-dialog-close]="false">Cancelar</button>
+</mat-dialog-actions>

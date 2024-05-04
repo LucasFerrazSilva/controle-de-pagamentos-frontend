@@ -16,6 +16,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmComponent } from '../commons/dialog-confirm/dialog-confirm.component';
 import { MessageDisplayerService } from '../commons/message-displayer/message-displayer.service';
 import { MessageType } from '../commons/message-displayer/message-type.enum';
+import { DialogHorasExtrasComponent } from './dialog-horas-extras/dialog-horas-extras.component';
 
 @Component({
   selector: 'app-horas-extras',
@@ -114,6 +115,13 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
 
   handleErrorDelete(error: any): void {
     this.messageDisplayerService.emitError(error);    
+  }
+
+  abrirDialog(horasExtras: HorasExtras | null = null) {
+    const dialogRef = this.dialog.open(DialogHorasExtrasComponent, { data: { horasExtras, aprovadores: this.aprovadores } });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      console.log(confirmed);
+    });
   }
 
 }
