@@ -20,9 +20,19 @@ form {
 }
 
 mat-dialog-content {
-    width: 400px;
+    width: 500px;
 }
 
 mat-form-field {
     width: 100%;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.hora {
+    width: 50%;
 }

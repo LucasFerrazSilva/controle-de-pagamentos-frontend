@@ -79,7 +79,7 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
 
     this.service.list(this.filtros, paginationParameters).subscribe({
       next: resp => this.loadData(resp),
-      error: err => console.log(err),
+      error: err => this.messageDisplayerService.emitError(err),
       complete: () => this.loadingService.emit(false)
     });
   }
@@ -120,7 +120,10 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   abrirDialog(horasExtras: HorasExtras | null = null) {
     const dialogRef = this.dialog.open(DialogHorasExtrasComponent, { data: { horasExtras, aprovadores: this.aprovadores } });
     dialogRef.afterClosed().subscribe(confirmed => {
-      console.log(confirmed);
+      if(confirmed) {
+        this.list();
+        this.messageDisplayerService.emit({message: 'Registro salvo com sucesso', messageType: MessageType.SUCCESS});
+      }
     });
   }
 
