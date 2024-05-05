@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, } from '@angular/forms';
 import { ParametroDTO } from './dto/ParametroDTO.interface';
 import { ParametrosService } from './parametros.service';
 import { LoadingService } from '../commons/loading/loading.service';
@@ -31,7 +31,7 @@ export class ParametrosComponent implements OnInit {
   filtros = { 
     nome: '',
     valor: '',
-    status: ParametroStatus.ATIVO
+    status: ''
    };
 
   constructor(
@@ -51,6 +51,8 @@ export class ParametrosComponent implements OnInit {
   ngAfterViewInit(): void {
     this.list();
   }
+
+
 
   list() {
     this.loadingService.emit(true);

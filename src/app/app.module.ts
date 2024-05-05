@@ -39,6 +39,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { PrestadoresComponent } from './prestadores/prestadores.component';
 
 
 
@@ -56,6 +57,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
     ParametrosComponent,
     NovoParametroComponent,
     ExcluirParametroComponent,
+    PrestadoresComponent,
   ],
   imports: [
     BrowserModule,
