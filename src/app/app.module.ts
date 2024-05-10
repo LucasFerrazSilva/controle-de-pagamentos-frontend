@@ -40,6 +40,7 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { PrestadoresComponent } from './prestadores/prestadores.component';
+import { NovoPrestadorDialogComponent } from './prestadores/novo-prestador-dialog/novo-prestador-dialog.component';
 
 
 
@@ -58,6 +59,7 @@ import { PrestadoresComponent } from './prestadores/prestadores.component';
     NovoParametroComponent,
     ExcluirParametroComponent,
     PrestadoresComponent,
+    NovoPrestadorDialogComponent,
   ],
   imports: [
     BrowserModule,
