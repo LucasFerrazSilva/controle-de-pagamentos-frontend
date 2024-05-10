@@ -49,14 +49,7 @@ export class LoginService {
   }
 
   handleError(error: HttpErrorResponse) {
-    if (error.error.message)
-      this.messageDisplayerService.emit({message: error.error.message, messageType: MessageType.ERROR});
-    else {
-      error.error.forEach((err: Error) => {
-        this.messageDisplayerService.emit({message: err.message, messageType: MessageType.ERROR});
-      });
-    }
-
+    this.messageDisplayerService.emitError(error);
     this.loadingService.emit(false);
   }
 

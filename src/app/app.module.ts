@@ -39,6 +39,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { DialogConfirmComponent } from './commons/dialog-confirm/dialog-confirm.component';
+import { DialogHorasExtrasComponent } from './horas-extras/dialog-horas-extras/dialog-horas-extras.component';
 import { PrestadoresComponent } from './prestadores/prestadores.component';
 import { NovoPrestadorDialogComponent } from './prestadores/novo-prestador-dialog/novo-prestador-dialog.component';
 
@@ -58,6 +60,8 @@ import { NovoPrestadorDialogComponent } from './prestadores/novo-prestador-dialo
     ParametrosComponent,
     NovoParametroComponent,
     ExcluirParametroComponent,
+    DialogConfirmComponent,
+    DialogHorasExtrasComponent,
     PrestadoresComponent,
     NovoPrestadorDialogComponent,
   ],
@@ -101,7 +105,7 @@ import { NovoPrestadorDialogComponent } from './prestadores/novo-prestador-dialo
     },
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'outline'}},
     {provide: MatPaginatorIntl, useClass: MyCustomPaginatorIntl},
-    {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'},
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   bootstrap: [AppComponent],
 })

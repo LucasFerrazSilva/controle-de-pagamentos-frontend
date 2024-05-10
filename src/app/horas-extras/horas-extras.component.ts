@@ -12,6 +12,11 @@ import { HorasExtrasService } from './horas-extras.service';
 import { PrestadoresService } from '../prestadores/prestadores.service';
 import { UserPerfil } from '../auth/user-perfil.enum';
 import { User } from '../auth/user.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from '../commons/dialog-confirm/dialog-confirm.component';
+import { MessageDisplayerService } from '../commons/message-displayer/message-displayer.service';
+import { MessageType } from '../commons/message-displayer/message-type.enum';
+import { DialogHorasExtrasComponent } from './dialog-horas-extras/dialog-horas-extras.component';
 
 @Component({
   selector: 'app-horas-extras',
@@ -45,7 +50,9 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
     private service: HorasExtrasService,
     private toolbarService: ToolbarService,
     private loadingService: LoadingService,
-    private prestadoresService: PrestadoresService
+    private dialog: MatDialog,
+    private prestadoresService: PrestadoresService,
+    private messageDisplayerService: MessageDisplayerService
   ) {}
 
   ngOnInit(): void {
@@ -72,7 +79,7 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
 
     this.service.list(this.filtros, paginationParameters).subscribe({
       next: resp => this.loadData(resp),
-      error: err => console.log(err),
+      error: err => this.messageDisplayerService.emitError(err),
       complete: () => this.loadingService.emit(false)
     });
   }
@@ -84,6 +91,40 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
     this.paginator.length = page.totalElements;
     this.paginator.pageIndex = page.pageable.pageNumber;
     this.paginator.pageSize = page.pageable.pageSize;
+  }
+
+  delete(item: HorasExtras) {
+    const message = `Tem certeza que deseja excluir o registro do dia ${new Date(item.dataHoraInicio).toLocaleDateString('pt-BR')}?`;
+    const dialogRef = this.dialog.open(DialogConfirmComponent, { data: { message } });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.loadingService.emit(true);
+        this.service.delete(item.id).subscribe({
+          next: resp => this.handleSuccessDelete(resp),
+          error: error => this.handleErrorDelete(error),
+          complete: () => this.loadingService.emit(false)
+        });
+      }
+    });
+  }
+
+  handleSuccessDelete(resp: Object): void {
+    this.messageDisplayerService.emit({message: 'Registro excluído com sucesso', messageType: MessageType.SUCCESS});   
+    this.list();
+  }
+
+  handleErrorDelete(error: any): void {
+    this.messageDisplayerService.emitError(error);    
+  }
+
+  abrirDialog(horasExtras: HorasExtras | null = null) {
+    const dialogRef = this.dialog.open(DialogHorasExtrasComponent, { data: { horasExtras, aprovadores: this.aprovadores } });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if(confirmed) {
+        this.list();
+        this.messageDisplayerService.emit({message: 'Registro salvo com sucesso', messageType: MessageType.SUCCESS});
+      }
+    });
   }
 
 }

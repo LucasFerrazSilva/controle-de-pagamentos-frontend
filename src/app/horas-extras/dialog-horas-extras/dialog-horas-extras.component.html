@@ -1,0 +1,47 @@
+<h1 mat-dialog-title>{{ horasExtras ? 'Atualizar' : 'Cadastrar' }} Horas Extras</h1>
+<mat-dialog-content>
+    <form #form [formGroup]="formGroup" (ngSubmit)="submit()">
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Início</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="dataInicio" (dateChange)="calcularTotalHoras()">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker disabled="false"></mat-datepicker>
+            </mat-form-field>     
+            <mat-form-field class="hora">
+                <mat-label>Hora</mat-label>
+                <input matInput type="time" formControlName="horaInicio" (blur)="calcularTotalHoras()"/>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Fim</mat-label>
+                <input matInput [matDatepicker]="pickerFim" formControlName="dataFim" (dateChange)="calcularTotalHoras()">
+                <mat-datepicker-toggle matIconSuffix [for]="pickerFim"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFim disabled="false"></mat-datepicker>
+            </mat-form-field>     
+            <mat-form-field class="hora">
+                <mat-label>Hora</mat-label>
+                <input matInput type="time" formControlName="horaFim" (blur)="calcularTotalHoras()"/>
+            </mat-form-field>
+        </div>
+        <mat-form-field>
+            <mat-label>Aprovador</mat-label>
+            <mat-select formControlName="idAprovador">
+                <mat-option *ngFor="let aprovador of aprovadores" [value]="aprovador.id">
+                    {{ aprovador.nome }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field> 
+        <mat-form-field>
+            <mat-label>Descrição</mat-label>
+            <textarea matInput type="text" formControlName="descricao"></textarea>
+        </mat-form-field>
+        <p>Total: {{ totalHoras }}</p>
+        <input type="submit" hidden />
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button (click)="submit()" color="primary" cdkFocusInitial [disabled]="formGroup.invalid">Salvar</button>
+  <button mat-stroked-button [mat-dialog-close]="false">Cancelar</button>
+</mat-dialog-actions>

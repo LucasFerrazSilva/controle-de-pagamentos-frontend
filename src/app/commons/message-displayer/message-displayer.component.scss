@@ -1,5 +1,6 @@
 #messages-card {
     color: white;
+    z-index: 9998;
 }
 
 #messages-card mat-card-content {
@@ -12,5 +13,13 @@
 }
 
 .error {
-    background-color: rgba(255, 0, 0, 0.7);
+    background-color: rgba(255, 0, 0, 0.9);
+}
+
+.warning {
+    background-color: rgba(240, 190, 0, 0.9);
+}
+
+.success {
+    background-color: rgba(0, 160, 21, 0.9);
 }
