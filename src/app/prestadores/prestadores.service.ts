@@ -6,6 +6,9 @@ import { Observable } from 'rxjs';
 import { User } from '../auth/user.interface';
 import { PaginationParameters } from '../commons/pagination/pagination-parameters.interface';
 import { Page } from '../commons/pagination/page.interface';
+import { NovoParametroComponent } from '../parametros/novo-parametro/novo-parametro.component';
+import { NovoUsuarioDTO } from './dto/NovoUsuarioDTO.interface';
+import { UpdateUsuarioDTO } from './dto/UpdateUsuarioDTO.interface';
 
 const API_URL = environment.apiUrl;
 const ENDPOINT = API_URL + '/user';
@@ -40,4 +43,18 @@ export class PrestadoresService {
 
     return this.http.get<Page<User>>(ENDPOINT, { params });
   }
+
+  create(dto: NovoUsuarioDTO) {
+    return this.http.post(ENDPOINT, dto);
+  }
+
+  update(id: number, dto: UpdateUsuarioDTO) {
+    return this.http.put(ENDPOINT + `/${id}`, dto);
+  }
+
+  delete(id: number) {
+    const endpoint = ENDPOINT + `/${id}`;
+    return this.http.delete(endpoint);
+  }
+
 }

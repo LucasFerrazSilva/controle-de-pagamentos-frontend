@@ -44,8 +44,6 @@ import { DialogHorasExtrasComponent } from './horas-extras/dialog-horas-extras/d
 import { PrestadoresComponent } from './prestadores/prestadores.component';
 import { NovoPrestadorDialogComponent } from './prestadores/novo-prestador-dialog/novo-prestador-dialog.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

@@ -9,6 +9,7 @@ import { PrestadoresService } from './prestadores.service';
 import { ToolbarService } from '../toolbar/toolbar.service';
 import { LoadingService } from '../commons/loading/loading.service';
 import { PaginationParameters } from '../commons/pagination/pagination-parameters.interface';
+import { UserPerfil } from '../auth/user-perfil.enum';
 
 @Component({
   selector: 'app-prestadores',
@@ -16,13 +17,19 @@ import { PaginationParameters } from '../commons/pagination/pagination-parameter
   styleUrls: ['./prestadores.component.scss']
 })
 export class PrestadoresComponent {
+  
+  allStatus = Object.keys(UserStatus);
+  statusSelected = UserStatus.ATIVO;
+  allPerfil = Object.keys(UserPerfil)
+  perfilSelected = UserPerfil.ROLE_USER;
   page: Page<User> | undefined;
   displayedColumns: string[] = ['nome', 'email', 'perfil', 'salario', 'acoes'];
   dataSource!: MatTableDataSource<User>;
   filtros = {
+    status: UserStatus.ATIVO,
+    perfil: UserPerfil.ROLE_USER,
     nome: '',
     email: '',
-    perfil: '',
   };
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
