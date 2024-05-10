@@ -43,6 +43,7 @@ import { DialogConfirmComponent } from './commons/dialog-confirm/dialog-confirm.
 import { DialogHorasExtrasComponent } from './horas-extras/dialog-horas-extras/dialog-horas-extras.component';
 import { PrestadoresComponent } from './prestadores/prestadores.component';
 import { NovoPrestadorDialogComponent } from './prestadores/novo-prestador-dialog/novo-prestador-dialog.component';
+import { RoleLabelPipe } from './commons/role-label.pipe';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { NovoPrestadorDialogComponent } from './prestadores/novo-prestador-dialo
     DialogHorasExtrasComponent,
     PrestadoresComponent,
     NovoPrestadorDialogComponent,
+    RoleLabelPipe,
   ],
   imports: [
     BrowserModule,

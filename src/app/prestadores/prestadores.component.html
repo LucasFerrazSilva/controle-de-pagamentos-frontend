@@ -21,7 +21,7 @@
                 <mat-label>Perfil</mat-label>
                 <mat-select [(value)]="filtros.perfil">
                     <mat-option *ngFor="let status of allPerfil" [value]="status">
-                        {{status | titlecase }}
+                        {{status | roleLabel | titlecase }}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -47,7 +47,7 @@
 
                 <ng-container matColumnDef="perfil">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Perfil </th>
-                    <td mat-cell *matCellDef="let user"> {{user.perfil}} </td>
+                    <td mat-cell *matCellDef="let user"> {{user.perfil | roleLabel }} </td>
                 </ng-container>
                 
                 <ng-container matColumnDef="salario">
