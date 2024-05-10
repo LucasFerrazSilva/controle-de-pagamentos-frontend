@@ -10,6 +10,11 @@ import { ToolbarService } from '../toolbar/toolbar.service';
 import { LoadingService } from '../commons/loading/loading.service';
 import { PaginationParameters } from '../commons/pagination/pagination-parameters.interface';
 import { UserPerfil } from '../auth/user-perfil.enum';
+import { DialogConfirmComponent } from '../commons/dialog-confirm/dialog-confirm.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDisplayerService } from '../commons/message-displayer/message-displayer.service';
+import { NovoPrestadorDialogComponent } from './novo-prestador-dialog/novo-prestador-dialog.component';
+import { MessageType } from '../commons/message-displayer/message-type.enum';
 
 @Component({
   selector: 'app-prestadores',
@@ -39,6 +44,8 @@ export class PrestadoresComponent {
     private service: PrestadoresService,
     private toolbarService: ToolbarService,
     private loadingService: LoadingService,
+    private dialog: MatDialog,
+    private messageDisplayerService: MessageDisplayerService
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +66,7 @@ export class PrestadoresComponent {
     let paginationParameters: PaginationParameters = {
       size: this.paginator.pageSize,
       page: this.paginator.pageIndex,
-      sort: ''
+      sort: `${this.sort.active},${this.sort.direction}`
     };
 
     this.service.list(this.filtros, paginationParameters).subscribe({
@@ -78,4 +85,37 @@ export class PrestadoresComponent {
     this.paginator.pageSize = page.pageable.pageSize;
   }
 
+  delete(item: User){
+    const message = `Tem certeza que deseja excluir o usuário ${item}?`;
+    const dialogRef = this.dialog.open(DialogConfirmComponent, { data: { message }});
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.loadingService.emit(true);
+        this.service.delete(item.id).subscribe({
+          next: resp => this.handleSuccessDelete(resp),
+          error: error => this.handleErrorDelete(error),
+          complete: () => this.loadingService.emit(false)
+        });
+      }
+    });
+  }
+
+  handleSuccessDelete(resp: Object): void {
+    this.messageDisplayerService.emit({message: 'Registro excluído com sucesso', messageType: MessageType.SUCCESS});   
+    this.list();
+  }
+
+  handleErrorDelete(error: any): void {
+    this.messageDisplayerService.emitError(error);    
+  }
+
+  abrirDialog(user: User | null = null){
+    const dialogRef = this.dialog.open(NovoPrestadorDialogComponent, { data: { user }});
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if(confirmed) {
+        this.list();
+        this.messageDisplayerService.emit({message: 'Usuário salvo com sucesso', messageType: MessageType.SUCCESS});
+      }
+    });
+  }
 }
