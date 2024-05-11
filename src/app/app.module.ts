@@ -25,7 +25,6 @@ import { HomeComponent } from './home/home.component';
 import { MessageDisplayerComponent } from './commons/message-displayer/message-displayer.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { ExcluirParametroComponent } from './parametros/excluir-parametro/excluir-parametro.component';
 import { HorasExtrasComponent } from './horas-extras/horas-extras.component';
 import { RequestInterceptor } from './auth/request.interceptor';
 import {MatSelectModule} from '@angular/material/select';
@@ -58,7 +57,6 @@ import { RoleLabelPipe } from './commons/role-label.pipe';
     NotFoundComponent,
     ParametrosComponent,
     NovoParametroComponent,
-    ExcluirParametroComponent,
     DialogConfirmComponent,
     DialogHorasExtrasComponent,
     PrestadoresComponent,

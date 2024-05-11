@@ -22,8 +22,6 @@
                 color="primary"><mat-icon>search</mat-icon> Pesquisar</button>
             </div>
             <br><br>
-
-            <button mat-raised-button color="primary"  (click)="adicionarParametro()">Adicionar</button>
               
             <table mat-table [dataSource]="dataSource"
             (matSortChange)="list()">
@@ -39,7 +37,6 @@
                   <th mat-header-cell *matHeaderCellDef> Ações </th>
                   <td mat-cell *matCellDef="let parametro">
                     <button mat-icon-button color="primary" matTooltip="Editar" (click)="editar(parametro)"><mat-icon>edit</mat-icon></button>
-                        <button mat-icon-button color="warn" matTooltip="Excluir" (click)="excluir(parametro.id)"><mat-icon>delete</mat-icon></button>
                   </td>
                 </ng-container>
               
