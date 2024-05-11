@@ -54,7 +54,8 @@ export class TokenService {
       id: tokenDecoded.id,
       nome: tokenDecoded.name,
       email: tokenDecoded.sub,
-      perfil: tokenDecoded.perfil
+      perfil: tokenDecoded.perfil,
+      salario: ''
     }
     return user;
   }

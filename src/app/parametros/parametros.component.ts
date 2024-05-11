@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, } from '@angular/forms';
 import { ParametroDTO } from './dto/ParametroDTO.interface';
 import { ParametrosService } from './parametros.service';
 import { LoadingService } from '../commons/loading/loading.service';
 import { NovoParametroComponent } from './novo-parametro/novo-parametro.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ExcluirParametroComponent } from './excluir-parametro/excluir-parametro.component';
 import { ToolbarService } from '../toolbar/toolbar.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -13,6 +12,7 @@ import { Page } from '../commons/pagination/page.interface';
 import { PaginationParameters } from '../commons/pagination/pagination-parameters.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { ParametroStatus } from './dto/ParametroStatus.enum';
+import { MessageDisplayerService } from '../commons/message-displayer/message-displayer.service';
 
 @Component({
   selector: 'app-parametros',
@@ -31,7 +31,7 @@ export class ParametrosComponent implements OnInit {
   filtros = { 
     nome: '',
     valor: '',
-    status: ParametroStatus.ATIVO
+    status: ''
    };
 
   constructor(
@@ -39,6 +39,7 @@ export class ParametrosComponent implements OnInit {
     private loadingService: LoadingService, 
     private dialog: MatDialog,
     private toolbarService: ToolbarService,
+    private messageDisplayerService: MessageDisplayerService,
   ){}
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -52,6 +53,7 @@ export class ParametrosComponent implements OnInit {
     this.list();
   }
 
+
   list() {
     this.loadingService.emit(true);
 
@@ -63,7 +65,7 @@ export class ParametrosComponent implements OnInit {
 
     this.parametrosService.list(this.filtros, paginationParameters).subscribe({
       next: resp => this.loadData(resp),
-      error: err => console.log(err),
+      error: err => this.messageDisplayerService.emitError(err),
       complete: () => this.loadingService.emit(false)
     });
   }
@@ -77,23 +79,8 @@ export class ParametrosComponent implements OnInit {
     this.paginator.pageSize = page.pageable.pageSize;
   }
 
-  adicionarParametro(){
-    let dialogRef = this.dialog.open(NovoParametroComponent, {
-      height: 'auto',
-      width: '40%',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.list();
-      } 
-    });
-    
-  }
   editar(parametroDTO: ParametroDTO) {
     let dialogRef = this.dialog.open(NovoParametroComponent, {
-      height: 'auto',
-      width: '40%',
       data: parametroDTO
     });
 
@@ -108,22 +95,4 @@ export class ParametrosComponent implements OnInit {
     
   }
 
-  excluir(id: number) {
-    const dialogRef = this.dialog.open(ExcluirParametroComponent, {
-      width: '400px',
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.parametrosService.delete(id)
-      } 
-      this.list();
-    });
-    
-  }
-
-  alternarEstado(): void {
-    this.status = this.status === 'ATIVO' ? 'INATIVO' : 'ATIVO';
-    this.list();
-  }
 }
