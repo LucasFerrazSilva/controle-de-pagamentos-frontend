@@ -32,7 +32,7 @@ export class PrestadoresComponent {
   dataSource!: MatTableDataSource<User>;
   filtros = {
     status: UserStatus.ATIVO,
-    perfil: UserPerfil.ROLE_USER,
+    perfil: '',
     nome: '',
     email: '',
   };
@@ -56,17 +56,14 @@ export class PrestadoresComponent {
     this.list();
   }
 
-  adicionarUsuario(){
-    return null;
-  }
-
   list() {
     this.loadingService.emit(true);
+
 
     let paginationParameters: PaginationParameters = {
       size: this.paginator.pageSize,
       page: this.paginator.pageIndex,
-      sort: `${this.sort.active},${this.sort.direction}`
+      sort: ''
     };
 
     this.service.list(this.filtros, paginationParameters).subscribe({
@@ -79,6 +76,7 @@ export class PrestadoresComponent {
   loadData(page: Page<User>) {
     this.page = page;
     this.dataSource = new MatTableDataSource(page.content);
+    this.dataSource.sort = this.sort;
 
     this.paginator.length = page.totalElements;
     this.paginator.pageIndex = page.pageable.pageNumber;
@@ -86,7 +84,7 @@ export class PrestadoresComponent {
   }
 
   delete(item: User){
-    const message = `Tem certeza que deseja excluir o usuário ${item}?`;
+    const message = `Tem certeza que deseja excluir o usuário ${item.nome}?`;
     const dialogRef = this.dialog.open(DialogConfirmComponent, { data: { message }});
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {

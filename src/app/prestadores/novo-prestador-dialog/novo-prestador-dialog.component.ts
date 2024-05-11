@@ -7,6 +7,7 @@ import { MessageDisplayerService } from 'src/app/commons/message-displayer/messa
 import { LoadingService } from 'src/app/commons/loading/loading.service';
 import { UserPerfil } from 'src/app/auth/user-perfil.enum';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MessageType } from 'src/app/commons/message-displayer/message-type.enum';
 
 @Component({
   selector: 'app-novo-prestador-dialog',
@@ -16,6 +17,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class NovoPrestadorDialogComponent implements OnInit {
   user: User | undefined;
   formGroup!: FormGroup;
+  allPerfil = Object.keys(UserPerfil)
+  perfilSelected = UserPerfil.ROLE_USER;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,19 +27,25 @@ export class NovoPrestadorDialogComponent implements OnInit {
     private messageDisplayerService: MessageDisplayerService,
     private loadingService: LoadingService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {
+    if (data.user){
+      this.user = data.user;
+    }
+  }
 
   ngOnInit(): void {
     const nome = this.user ? this.user.nome : '';
     const email = this.user ? this.user.email : '';
     const senha = '';
+    const repeteSenha = '';
     const salario = this.user ? this.user.salario : 0;
     const perfil = this.user ? this.user.perfil : UserPerfil.ROLE_USER; 
 
     this.formGroup = this.formBuilder.group({
       nome: [nome, Validators.required],
-      email: [email, Validators.required, Validators.email],
+      email: [email, [Validators.required, Validators.email]],
       senha: [senha, Validators.required],
+      repeteSenha: [repeteSenha, Validators.required],
       salario: [salario, Validators.required],
       perfil: [perfil, Validators.required],
     })
@@ -45,27 +54,33 @@ export class NovoPrestadorDialogComponent implements OnInit {
   submit() {
     const values = this.formGroup.getRawValue();
     
-    let dto = {
-      nome: values.nome,
-      email: values.email,
-      senha: values.senha,
-      salario: values.salario,
-      perfil: values.perfil,
-    };
+    if (values.senha == values.repeteSenha){
 
-    this.loadingService.emit(true);
+      let dto = {
+        nome: values.nome,
+        email: values.email,
+        senha: values.senha,
+        salario: values.salario,
+        perfil: values.perfil,
+      };
 
-    if (this.user) {
-      this.service.update(this.user.id, dto).subscribe({
-        next: resp => this.handleSuccess(resp),
-        error: error => this.handleError(error),
-        complete: () => this.loadingService.emit(false)
-      });
+      this.loadingService.emit(true);
+
+      if (this.user) {
+        this.service.update(this.user.id, dto).subscribe({
+          next: resp => this.handleSuccess(resp),
+          error: error => this.handleError(error),
+          complete: () => this.loadingService.emit(false)
+        });
+      } else {
+        this.service.create(dto).subscribe({
+          next: resp => this.handleSuccess(resp),
+          error: error => this.handleError(error)
+        }); 
+      }
     } else {
-      this.service.create(dto).subscribe({
-        next: resp => this.handleSuccess(resp),
-        error: error => this.handleError(error)
-      }); 
+      this.messageDisplayerService.emit({message: 'As senhas não correspondem', messageType: MessageType.WARNING});
+      this.loadingService.emit(false);
     }
   }
 

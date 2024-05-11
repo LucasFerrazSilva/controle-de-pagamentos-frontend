@@ -4,10 +4,16 @@
             <mat-form-field>
                 <mat-label>Nome</mat-label>
                 <input matInput required [(ngModel)]="filtros.nome" placeholder="nome">
+                <button *ngIf="filtros.nome" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.nome=''">
+                    <mat-icon>close</mat-icon>
+                </button>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Email</mat-label>
                 <input matInput required [(ngModel)]="filtros.email" placeholder="nome">
+                <button *ngIf="filtros.email" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.email=''">
+                    <mat-icon>close</mat-icon>
+                </button>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Status</mat-label>
@@ -24,12 +30,15 @@
                         {{status | roleLabel | titlecase }}
                     </mat-option>
                 </mat-select>
+                <button *ngIf="filtros.perfil" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.perfil=''">
+                    <mat-icon>close</mat-icon>
+                </button>
             </mat-form-field>
             <button id="btn-filter" mat-fab extended type="button" (click)="list()"
                 color="primary"><mat-icon>search</mat-icon> Pesquisar</button>
         </div>
 
-        <button mat-raised-button color="primary"  (click)="adicionarUsuario()">Adicionar</button>
+        <button mat-raised-button color="primary"  (click)="abrirDialog()">Adicionar</button>
 
         <div>
             <table mat-table [dataSource]="dataSource"  matSort
@@ -58,8 +67,8 @@
                 <ng-container matColumnDef="acoes">
                   <th mat-header-cell *matHeaderCellDef> Ações </th>
                   <td mat-cell *matCellDef="let user">
-                      <button mat-icon-button color="primary" matTooltip="Editar"><mat-icon>edit</mat-icon></button>
-                        <button mat-icon-button color="warn" matTooltip="Excluir"><mat-icon>delete</mat-icon></button>
+                      <button mat-icon-button color="primary" matTooltip="Editar" *ngIf="user.status != 'INATIVO'" (click)="abrirDialog(user)"><mat-icon>edit</mat-icon></button>
+                        <button mat-icon-button color="warn" matTooltip="Excluir" *ngIf="user.status != 'INATIVO'" (click)="delete(user)"><mat-icon>delete</mat-icon></button>
                   </td>
                 </ng-container>
 
@@ -73,7 +82,7 @@
             </table>
 
             <mat-paginator [pageSize]="10" (page)="list()" [pageSizeOptions]="[5, 10, 25, 100]"
-                aria-label="Select page of horas extras" [showFirstLastButtons]="true"></mat-paginator>
+                aria-label="Select page of user" [showFirstLastButtons]="true"></mat-paginator>
         </div>
     </mat-card-content>
 </mat-card>
