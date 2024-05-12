@@ -17,6 +17,7 @@ import { DialogConfirmComponent } from '../commons/dialog-confirm/dialog-confirm
 import { MessageDisplayerService } from '../commons/message-displayer/message-displayer.service';
 import { MessageType } from '../commons/message-displayer/message-type.enum';
 import { DialogHorasExtrasComponent } from './dialog-horas-extras/dialog-horas-extras.component';
+import { TokenService } from '../auth/token.service';
 
 @Component({
   selector: 'app-horas-extras',
@@ -34,6 +35,7 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   fim: Date | null = null;
   prestadores: User[] | undefined;
   aprovadores: User[] | undefined;
+  userPerfil: string | undefined;
   filtros = {
     status: HorasExtrasStatus.SOLICITADO,
     descricao: '',
@@ -52,13 +54,17 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
     private loadingService: LoadingService,
     private dialog: MatDialog,
     private prestadoresService: PrestadoresService,
-    private messageDisplayerService: MessageDisplayerService
+    private messageDisplayerService: MessageDisplayerService,
+    private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
     this.toolbarService.emitPageName("Horas extras");
     this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_USER).subscribe(data => this.prestadores = data);
     this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_GESTOR).subscribe(data => this.aprovadores = data);
+    this.userPerfil = this.tokenService.getLoggedUser()?.perfil;
+    console.log(this.userPerfil);
+
   }
 
   ngAfterViewInit(): void {
