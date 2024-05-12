@@ -43,7 +43,7 @@ export class NovoParametroComponent implements OnInit  {
   cancelar(){
     this.dialogRef.close();
   }
-  onSubmit(){
+  submit(){
     
     if(this.data){
       const updateParametroDTO = this.formGroup.value;
