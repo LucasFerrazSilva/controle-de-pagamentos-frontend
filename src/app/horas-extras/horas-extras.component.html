@@ -1,7 +1,7 @@
 <mat-card>
     <mat-card-content>
         <div id="filters">
-            <mat-form-field>
+            <mat-form-field *ngIf="userPerfil != 'ROLE_USER'">
                 <mat-label>Prestador</mat-label>
                 <mat-select [(value)]="filtros.idUsuario">
                     <mat-option *ngFor="let prestador of prestadores" [value]="prestador.id">

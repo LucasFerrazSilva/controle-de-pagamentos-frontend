@@ -1,10 +1,12 @@
-import { UpdateParametroDTO } from './../dto/updateParametroDTO.interface';
-import { NovoParametroDTO } from './../dto/NovoParametroDTO.interface';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ParametrosService } from '../parametros.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ParametroDTO } from '../dto/ParametroDTO.interface';
+import { HttpErrorResponse } from '@angular/common/http';
+import { LoadingService } from 'src/app/commons/loading/loading.service';
+import { MessageDisplayerService } from 'src/app/commons/message-displayer/message-displayer.service';
+import { MessageType } from 'src/app/commons/message-displayer/message-type.enum';
 
 @Component({
   selector: 'app-novo-parametro',
@@ -12,19 +14,18 @@ import { ParametroDTO } from '../dto/ParametroDTO.interface';
   styleUrls: ['./novo-parametro.component.scss']
 })
 export class NovoParametroComponent implements OnInit  {
-  isUpdate : boolean = true;
   formGroup!: FormGroup;
-  action: string = "";
 
   constructor(
     private parametrosService: ParametrosService,
     public dialogRef: MatDialogRef<NovoParametroComponent>,
     private formBuilder: FormBuilder,
+    private messageDisplayerService: MessageDisplayerService,
+    private loadingService: LoadingService,
     @Inject(MAT_DIALOG_DATA) public data: ParametroDTO
   ){}
 
   ngOnInit(): void {
-    this.isUpdate = !!this.data;
     this.buildForm();
   }
 
@@ -32,8 +33,6 @@ export class NovoParametroComponent implements OnInit  {
     const nome = this.data ? this.data.nome : "";
     const valor = this.data ? this.data.valor : "";
     const id = this.data ? this.data.id : "";
-    this.action = this.data ? "Atualizar" : "Criar";
-    console.log(nome);
 
     this.formGroup = this.formBuilder.group({
       nome: [nome, [Validators.required]],
@@ -43,17 +42,26 @@ export class NovoParametroComponent implements OnInit  {
   cancelar(){
     this.dialogRef.close();
   }
-  onSubmit(){
+  submit(){
     
-    if(this.data){
-      const updateParametroDTO = this.formGroup.value;
-      this.parametrosService.update(this.data.id, updateParametroDTO)
-    } else {
-      const NovoParametroDTO = this.formGroup.value;
-      this.parametrosService.create(NovoParametroDTO);
-    }
-    
+    const updateParametroDTO = this.formGroup.value;
+    this.parametrosService.update(this.data.id, updateParametroDTO).subscribe({
+      next: resp => this.handleSuccess(resp),
+      error: error => this.handleError(error),
+      complete: () => this.loadingService.emit(false)
+    });
     this.dialogRef.close(true);
 
+  }
+
+  handleSuccess(resp: Object): void {
+    this.messageDisplayerService.emit({message: 'Parametro salvo com sucesso', messageType: MessageType.SUCCESS});
+    this.dialogRef.close(true);
+    this.loadingService.emit(false);
+  }
+
+  handleError(error: HttpErrorResponse): void {
+    this.messageDisplayerService.emitError(error);
+    this.loadingService.emit(false);
   }
 }

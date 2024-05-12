@@ -42,7 +42,7 @@ import { DialogConfirmComponent } from './commons/dialog-confirm/dialog-confirm.
 import { DialogHorasExtrasComponent } from './horas-extras/dialog-horas-extras/dialog-horas-extras.component';
 import { PrestadoresComponent } from './prestadores/prestadores.component';
 import { NovoPrestadorDialogComponent } from './prestadores/novo-prestador-dialog/novo-prestador-dialog.component';
-import { RoleLabelPipe } from './commons/role-label.pipe';
+import { RoleLabelPipe } from './commons/pipes/role-label.pipe';
 
 @NgModule({
   declarations: [

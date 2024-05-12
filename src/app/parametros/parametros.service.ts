@@ -55,13 +55,9 @@ export class ParametrosService {
    }
 
    update(id:number, updateParametroDTO: UpdateParametroDTO){
-    const req = this.httpClient.put<UpdateParametroDTO>(`${PARAMETRO_ENDPOINT}/${id}`, updateParametroDTO);
-    req.subscribe({
-      next: data => { console.log('Parametro atualizado', data.nome); this.loadingService.emit(false); },
-      error: err => this.handleError(err)
-    });
+    return this.httpClient.put(`${PARAMETRO_ENDPOINT}/${id}`, updateParametroDTO);
    }
-
+   
   delete(id: number){
     const deleteUrl = `${PARAMETRO_ENDPOINT}/${id}`;
     const req = this.httpClient.delete(deleteUrl);
