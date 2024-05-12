@@ -32,7 +32,7 @@
         <div class="row">
             <mat-form-field>
                 <mat-label>Perfil</mat-label>
-                <mat-select [(value)]="perfilSelected">
+                <mat-select [(value)]="perfilSelected" formControlName="perfil">
                     <mat-option *ngFor="let status of allPerfil" [value]="status">
                         {{status | roleLabel | titlecase }}
                     </mat-option>
