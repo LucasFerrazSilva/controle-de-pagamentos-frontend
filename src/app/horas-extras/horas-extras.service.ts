@@ -8,6 +8,7 @@ import { NovasHorasExtras } from './dto/novas-horas-extras.interface';
 import { AtualizarHorasExtras } from './dto/atualiar-horas-extras.interface';
 import { Page } from '../commons/pagination/page.interface';
 import { PaginationParameters } from '../commons/pagination/pagination-parameters.interface';
+import { AvaliarHoras } from './dto/AvaliarHoras.interface';
 
 const API_URL = environment.apiUrl;
 const ENDPOINT = API_URL + '/horas-extras';
@@ -50,6 +51,11 @@ export class HorasExtrasService {
   delete(id: number) {
     const endpoint = ENDPOINT + `/${id}`;
     return this.http.delete(endpoint);
+  }
+
+  avaliar(dto: AvaliarHoras){
+    const endpoint = ENDPOINT + `/avaliar-horas`;
+    return this.http.post(endpoint, dto);
   }
 
 }

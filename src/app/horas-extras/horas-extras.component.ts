@@ -29,6 +29,7 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   allStatus = Object.keys(HorasExtrasStatus);
   statusSelected = HorasExtrasStatus.SOLICITADO;
   userPerfil: string | undefined;
+  userId: number | undefined;
   page: Page<HorasExtras> | undefined;
   displayedColumns: string[] = ['user.nome', 'dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'];
   dataSource!: MatTableDataSource<HorasExtras>;
@@ -63,8 +64,8 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
     this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_USER).subscribe(data => this.prestadores = data);
     this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_GESTOR).subscribe(data => this.aprovadores = data);
     this.userPerfil = this.tokenService.getLoggedUser()?.perfil;
-    this.displayedColumns = this.userPerfil != 'ROLE_USER'? ['user.nome', 'dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'] : ['dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'];;
-
+    this.userId = this.tokenService.getLoggedUser()?.id;
+    this.displayedColumns = this.userPerfil != 'ROLE_USER'? ['user.nome', 'dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'] : ['dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'];
   }
 
   ngAfterViewInit(): void {
@@ -113,6 +114,40 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
       }
     });
   }
+
+  aprovar(item: HorasExtras){
+    this.loadingService.emit(true);
+    let dto = {
+      id: item.id,
+      status: HorasExtrasStatus.APROVADO
+    }
+
+    this.service.avaliar(dto).subscribe({
+      next: resp => this.handleSuccess(resp, "Registro aprovado com sucesso"),
+      error: error => this.handleErrorDelete(error),
+      complete: () => this.loadingService.emit(false)
+    });
+  }
+
+  reprovar(item: HorasExtras){
+    this.loadingService.emit(true);
+    let dto = {
+      id: item.id,
+      status: HorasExtrasStatus.RECUSADO
+    }
+
+    this.service.avaliar(dto).subscribe({
+      next: resp => this.handleSuccess(resp, "Registro recusado com sucesso"),
+      error: error => this.handleErrorDelete(error),
+      complete: () => this.loadingService.emit(false)
+    });
+  }
+
+  handleSuccess(resp:Object, message: string): void{
+    this.messageDisplayerService.emit({message: message, messageType: MessageType.SUCCESS});   
+    this.list();
+  }
+
 
   handleSuccessDelete(resp: Object): void {
     this.messageDisplayerService.emit({message: 'Registro excluído com sucesso', messageType: MessageType.SUCCESS});   
