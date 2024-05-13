@@ -49,7 +49,7 @@ export class ParametrosService {
   create(novoParametroDTO: NovoParametroDTO){
     const req = this.httpClient.post<NovoParametroDTO>(PARAMETRO_ENDPOINT, novoParametroDTO);
     req.subscribe({
-      next: data => { console.log('Parametro publicado', data.nome); this.loadingService.emit(false); },
+      next: data => { this.loadingService.emit(false); },
       error: err => this.handleError(err)
     });
    }
@@ -69,7 +69,6 @@ export class ParametrosService {
 
   handleError(error: HttpErrorResponse) {
     this.loadingService.emit(false);
-    console.log(error);
     return throwError (() => this.messageDisplayerService.emit({message: error.error.message, messageType: MessageType.ERROR}));
   }
 

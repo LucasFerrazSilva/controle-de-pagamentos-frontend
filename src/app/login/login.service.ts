@@ -1,14 +1,13 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginDTO } from './dto/login-dto.interface';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { TokenDTO } from './dto/token-dto.interface';
-import { User } from '../auth/user.interface';
-import { LoadingService } from '../commons/loading/loading.service';
-import { TokenService } from '../auth/token.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { TokenService } from '../auth/token.service';
+import { LoadingService } from '../commons/loading/loading.service';
 import { MessageDisplayerService } from '../commons/message-displayer/message-displayer.service';
+import { LoginDTO } from './dto/login-dto.interface';
+import { TokenDTO } from './dto/token-dto.interface';
+import jwt_decode from 'jwt-decode';
 import { MessageType } from '../commons/message-displayer/message-type.enum';
 
 const BACKEND_URL = environment.apiUrl;
@@ -52,5 +51,22 @@ export class LoginService {
     this.messageDisplayerService.emitError(error);
     this.loadingService.emit(false);
   }
+
+  checkTokenExpired() {
+    const token = this.tokenService.getToken();
+        
+    if (token) {
+      const tokenDecoded: any = jwt_decode(token);
+      const tokenExpirado = Date.now() > tokenDecoded.exp * 1000;
+      if (tokenExpirado) {
+          this.loadingService.emit(false);
+          this.logout();
+          this.messageDisplayerService.emit({message: "Sessão expirada.", messageType: MessageType.WARNING});
+          return true;
+      }
+    }
+
+    return false;
+  }  
 
 }
