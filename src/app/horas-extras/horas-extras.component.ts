@@ -28,6 +28,7 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
 
   allStatus = Object.keys(HorasExtrasStatus);
   statusSelected = HorasExtrasStatus.SOLICITADO;
+  userPerfil: string | undefined;
   page: Page<HorasExtras> | undefined;
   displayedColumns: string[] = ['user.nome', 'dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'];
   dataSource!: MatTableDataSource<HorasExtras>;
@@ -35,7 +36,6 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   fim: Date | null = null;
   prestadores: User[] | undefined;
   aprovadores: User[] | undefined;
-  userPerfil: string | undefined;
   filtros = {
     status: HorasExtrasStatus.SOLICITADO,
     descricao: '',
@@ -63,7 +63,7 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
     this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_USER).subscribe(data => this.prestadores = data);
     this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_GESTOR).subscribe(data => this.aprovadores = data);
     this.userPerfil = this.tokenService.getLoggedUser()?.perfil;
-    console.log(this.userPerfil);
+    this.displayedColumns = this.userPerfil != 'ROLE_USER'? ['user.nome', 'dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'] : ['dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'];;
 
   }
 
