@@ -104,8 +104,8 @@
                     <td mat-cell *matCellDef="let row">
                         <button mat-icon-button color="primary" matTooltip="Editar" *ngIf="row.status == 'SOLICITADO' && row.user.id == userId" (click)="abrirDialog(row)"><mat-icon>edit</mat-icon></button> 
                         <button mat-icon-button color="warn" matTooltip="Excluir" *ngIf="row.status == 'SOLICITADO' && row.user.id == userId" (click)="delete(row)"><mat-icon>delete</mat-icon></button>
-                        <button mat-icon-button class="btn-aprovar" matTooltip="Aprovar" *ngIf="row.status == 'SOLICITADO' &&  userPerfil == 'ROLE_GESTOR'" (click)="aprovar(row)"><mat-icon>done</mat-icon></button> 
-                        <button mat-icon-button color="warn" matTooltip="Recusar" *ngIf="row.status == 'SOLICITADO' &&  userPerfil == 'ROLE_GESTOR'" (click)="reprovar(row)"><mat-icon>block</mat-icon></button>
+                        <button mat-icon-button class="btn-aprovar" matTooltip="Aprovar" *ngIf="row.status == 'SOLICITADO' &&  userPerfil == 'ROLE_GESTOR'" (click)="avaliar(row, statusAprovado)"><mat-icon>done</mat-icon></button> 
+                        <button mat-icon-button color="warn" matTooltip="Recusar" *ngIf="row.status == 'SOLICITADO' &&  userPerfil == 'ROLE_GESTOR'" (click)="avaliar(row, statusRecusado)"><mat-icon>block</mat-icon></button>
                     </td>
                 </ng-container>
 

@@ -37,6 +37,8 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   fim: Date | null = null;
   prestadores: User[] | undefined;
   aprovadores: User[] | undefined;
+  statusAprovado = HorasExtrasStatus.APROVADO;
+  statusRecusado = HorasExtrasStatus.RECUSADO;
   filtros = {
     status: HorasExtrasStatus.SOLICITADO,
     descricao: '',
@@ -115,36 +117,22 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
     });
   }
 
-  aprovar(item: HorasExtras){
+  avaliar(item: HorasExtras, status: HorasExtrasStatus){
     this.loadingService.emit(true);
     let dto = {
       id: item.id,
-      status: HorasExtrasStatus.APROVADO
+      status: status
     }
 
     this.service.avaliar(dto).subscribe({
-      next: resp => this.handleSuccess(resp, "Registro aprovado com sucesso"),
-      error: error => this.handleErrorDelete(error),
+      next: resp => this.handleSuccessAvaliation(resp),
+      error: error => this.messageDisplayerService.emitError(error),
       complete: () => this.loadingService.emit(false)
     });
   }
 
-  reprovar(item: HorasExtras){
-    this.loadingService.emit(true);
-    let dto = {
-      id: item.id,
-      status: HorasExtrasStatus.RECUSADO
-    }
-
-    this.service.avaliar(dto).subscribe({
-      next: resp => this.handleSuccess(resp, "Registro recusado com sucesso"),
-      error: error => this.handleErrorDelete(error),
-      complete: () => this.loadingService.emit(false)
-    });
-  }
-
-  handleSuccess(resp:Object, message: string): void{
-    this.messageDisplayerService.emit({message: message, messageType: MessageType.SUCCESS});   
+  handleSuccessAvaliation(resp:Object): void{
+    this.messageDisplayerService.emit({message: "Registro avaliado com sucesso", messageType: MessageType.SUCCESS});   
     this.list();
   }
 
@@ -155,7 +143,7 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   }
 
   handleErrorDelete(error: any): void {
-    this.messageDisplayerService.emitError(error);    
+    this.messageDisplayerService.emitError(error);
   }
 
   abrirDialog(horasExtras: HorasExtras | null = null) {
