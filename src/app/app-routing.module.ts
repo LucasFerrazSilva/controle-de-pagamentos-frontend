@@ -10,13 +10,13 @@ import { NovoParametroComponent } from './parametros/novo-parametro/novo-paramet
 import { PrestadoresComponent } from './prestadores/prestadores.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [authGuard], data: { role: 'ROLE_ADMIN' } },
-  { path: 'horas-extras', component: HorasExtrasComponent, canActivate: [authGuard], data: { role: 'X' } },
+  { path: '', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'horas-extras', component: HorasExtrasComponent, canActivate: [authGuard] },
   { path: 'login', component: LoginComponent },
-  { path: 'parametros', component: ParametrosComponent, canActivate: [authGuard],
+  { path: 'parametros', component: ParametrosComponent, canActivate: [authGuard], data: { role: ['ROLE_ADMIN', 'ROLE_GESTOR', 'ROLE_FINANCEIRO'] } , 
     children: [{ path: 'novoParametro', component: NovoParametroComponent}]
   },
-  { path: 'prestadores', component: PrestadoresComponent },
+  { path: 'prestadores', component: PrestadoresComponent, canActivate: [authGuard], data: { role: ['ROLE_ADMIN', 'ROLE_GESTOR', 'ROLE_FINANCEIRO'] } },
   { path: '**', component: NotFoundComponent },
 ];
 

@@ -104,7 +104,8 @@ export class PrestadoresComponent {
   }
 
   handleErrorDelete(error: any): void {
-    this.messageDisplayerService.emitError(error);    
+    this.messageDisplayerService.emitError(error);
+    this.loadingService.emit(false);
   }
 
   abrirDialog(user: User | null = null){

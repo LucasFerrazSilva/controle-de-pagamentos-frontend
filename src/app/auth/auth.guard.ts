@@ -4,13 +4,15 @@ import { TokenService } from './token.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const tokenService = inject(TokenService);
-  console.log(route.data['role']);
 
-  if (tokenService.hasToken())
-    return true;
-
+  if (tokenService.hasToken()) {
+    const rolesAllowed: string[] = route.data['role'];
+    const loggedUser = tokenService.getLoggedUser();
+    if (!rolesAllowed || (loggedUser && rolesAllowed.indexOf(loggedUser.perfil) != -1))
+      return true;
+  }
 
   const router = inject(Router);
-  router.navigate(['/login']);
+  router.navigate(['/']);
   return false;
 };
