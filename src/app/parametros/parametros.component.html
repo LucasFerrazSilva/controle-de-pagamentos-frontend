@@ -5,21 +5,22 @@
               <mat-form-field>
                   <mat-label>Nome</mat-label>
                   <input matInput required [(ngModel)]="filtros.nome" placeholder="nome">
+                  
+                  <button *ngIf="filtros.nome" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.nome=''">
+                    <mat-icon>close</mat-icon>
+                  </button>
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Valor</mat-label>
                 <input matInput required [(ngModel)]="filtros.valor" placeholder="valor">
+                  
+                <button *ngIf="filtros.valor" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.valor=''">
+                  <mat-icon>close</mat-icon>
+                </button>
             </mat-form-field>
-            <mat-form-field>
-              <mat-label>Status</mat-label>
-              <mat-select [(value)]="filtros.status">
-                  <mat-option *ngFor="let status of allStatus" [value]="status">
-                      {{status | titlecase }}
-                  </mat-option>
-              </mat-select>
-            </mat-form-field>
-              <button id="btn-filter" mat-fab extended type="button" (click)="list()"
-                color="primary"><mat-icon>search</mat-icon> Pesquisar</button>
+            <button id="btn-filter" mat-fab extended type="button" (click)="list()" color="primary">
+              <mat-icon>search</mat-icon> Pesquisar
+            </button>
             </div>
             <br><br>
               
