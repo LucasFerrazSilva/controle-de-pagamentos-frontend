@@ -35,7 +35,7 @@
         </mat-form-field> 
         <mat-form-field>
             <mat-label>Descrição</mat-label>
-            <textarea matInput type="text" formControlName="descricao"></textarea>
+            <textarea matInput type="text" formControlName="descricao" maxlength="255" rows="5"></textarea>
         </mat-form-field>
         <p>Total: {{ totalHoras }}</p>
         <input type="submit" hidden />

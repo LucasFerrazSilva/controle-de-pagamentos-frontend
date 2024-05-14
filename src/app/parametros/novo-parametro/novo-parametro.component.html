@@ -4,7 +4,7 @@
         <div class="row">
             <mat-form-field>
                 <mat-label>Nome</mat-label>
-                <input matInput placeholder="Nome" name="nome" formControlName="nome" required>
+                <textarea matInput type="text" formControlName="nome" maxlength="255" rows="2" required></textarea>
                 <mat-error>
                     Por favor insira um nome válido
                 </mat-error>
@@ -12,7 +12,7 @@
         </div>
         <mat-form-field>
             <mat-label>Valor</mat-label>
-            <input matInput placeholder="Valor" name="valor" formControlName="valor" required>
+            <textarea matInput type="text" formControlName="valor" maxlength="255" rows="2" required></textarea>
             <mat-error>
                 Por favor insira um valor válido
             </mat-error>

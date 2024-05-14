@@ -16,6 +16,10 @@ export class MessageDisplayerComponent {
     private messageDisplayerService: MessageDisplayerService
   ) {
     this.message$ = messageDisplayerService.messageSubject.asObservable();
+    messageDisplayerService.messageSubject.subscribe(message => {
+      if (message != null)
+        setTimeout(() => this.clearMessage(), 10000);
+    });
   }
 
   clearMessage() {
