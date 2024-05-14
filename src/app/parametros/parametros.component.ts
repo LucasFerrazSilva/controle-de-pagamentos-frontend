@@ -13,6 +13,7 @@ import { PaginationParameters } from '../commons/pagination/pagination-parameter
 import { MatTableDataSource } from '@angular/material/table';
 import { ParametroStatus } from './dto/ParametroStatus.enum';
 import { MessageDisplayerService } from '../commons/message-displayer/message-displayer.service';
+import { MessageType } from '../commons/message-displayer/message-type.enum';
 
 @Component({
   selector: 'app-parametros',
@@ -89,10 +90,7 @@ export class ParametrosComponent implements OnInit {
         this.list();
       } 
     });
-    
-    
     this.list();
-    
   }
 
 }

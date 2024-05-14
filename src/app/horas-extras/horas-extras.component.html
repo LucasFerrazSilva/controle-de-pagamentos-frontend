@@ -69,7 +69,7 @@
             <table mat-table [dataSource]="dataSource" matSort matSortActive="dataHoraFim" matSortDirection="desc"
                 (matSortChange)="list()">
 
-                <ng-container matColumnDef="user.nome">
+                <ng-container matColumnDef="user.nome" >
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Solicitante </th>
                     <td mat-cell *matCellDef="let row"> {{row.user.nome}} </td>
                 </ng-container>
@@ -102,8 +102,10 @@
                 <ng-container matColumnDef="acoes">
                     <th mat-header-cell *matHeaderCellDef> Ações </th>
                     <td mat-cell *matCellDef="let row">
-                        <button mat-icon-button color="primary" matTooltip="Editar" *ngIf="row.status != 'INATIVO'" (click)="abrirDialog(row)"><mat-icon>edit</mat-icon></button>
-                        <button mat-icon-button color="warn" matTooltip="Excluir" *ngIf="row.status != 'INATIVO'" (click)="delete(row)"><mat-icon>delete</mat-icon></button>
+                        <button mat-icon-button color="primary" matTooltip="Editar" *ngIf="row.status == 'SOLICITADO' && row.user.id == userId" (click)="abrirDialog(row)"><mat-icon>edit</mat-icon></button> 
+                        <button mat-icon-button color="warn" matTooltip="Excluir" *ngIf="row.status == 'SOLICITADO' && row.user.id == userId" (click)="delete(row)"><mat-icon>delete</mat-icon></button>
+                        <button mat-icon-button class="btn-aprovar" matTooltip="Aprovar" *ngIf="row.status == 'SOLICITADO' &&  userPerfil == 'ROLE_GESTOR'" (click)="avaliar(row, statusAprovado)"><mat-icon>done</mat-icon></button> 
+                        <button mat-icon-button color="warn" matTooltip="Recusar" *ngIf="row.status == 'SOLICITADO' &&  userPerfil == 'ROLE_GESTOR'" (click)="avaliar(row, statusRecusado)"><mat-icon>block</mat-icon></button>
                     </td>
                 </ng-container>
 

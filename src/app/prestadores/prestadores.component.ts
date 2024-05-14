@@ -68,7 +68,7 @@ export class PrestadoresComponent {
 
     this.service.list(this.filtros, paginationParameters).subscribe({
       next: resp => this.loadData(resp),
-      error: err => console.log(err),
+      error: err => this.messageDisplayerService.emitError(err),
       complete: () => this.loadingService.emit(false)
     });
   }

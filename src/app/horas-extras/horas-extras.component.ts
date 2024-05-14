@@ -29,6 +29,8 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
 
   allStatus = Object.keys(HorasExtrasStatus);
   statusSelected = HorasExtrasStatus.SOLICITADO;
+  userPerfil: string | undefined;
+  userId: number | undefined;
   page: Page<HorasExtras> | undefined;
   displayedColumns: string[] = ['user.nome', 'dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'];
   dataSource!: MatTableDataSource<HorasExtras>;
@@ -36,7 +38,8 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   fim: Date | null = null;
   prestadores: User[] | undefined;
   aprovadores: User[] | undefined;
-  userPerfil: string | undefined;
+  statusAprovado = HorasExtrasStatus.APROVADO;
+  statusRecusado = HorasExtrasStatus.RECUSADO;
   filtros = {
     status: HorasExtrasStatus.SOLICITADO,
     descricao: '',
@@ -70,6 +73,8 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
     this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_USER).subscribe(data => this.prestadores = data);
     this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_GESTOR).subscribe(data => this.aprovadores = data);
     this.userPerfil = this.tokenService.getLoggedUser()?.perfil;
+    this.userId = this.tokenService.getLoggedUser()?.id;
+    this.displayedColumns = this.userPerfil != 'ROLE_USER'? ['user.nome', 'dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'] : ['dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'];
   }
 
   ngAfterViewInit(): void {
@@ -122,13 +127,33 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
     });
   }
 
+  avaliar(item: HorasExtras, status: HorasExtrasStatus){
+    this.loadingService.emit(true);
+    let dto = {
+      id: item.id,
+      status: status
+    }
+
+    this.service.avaliar(dto).subscribe({
+      next: resp => this.handleSuccessAvaliation(resp),
+      error: error => this.messageDisplayerService.emitError(error),
+      complete: () => this.loadingService.emit(false)
+    });
+  }
+
+  handleSuccessAvaliation(resp:Object): void{
+    this.messageDisplayerService.emit({message: "Registro avaliado com sucesso", messageType: MessageType.SUCCESS});   
+    this.list();
+  }
+
+
   handleSuccessDelete(resp: Object): void {
     this.messageDisplayerService.emit({message: 'Registro excluído com sucesso', messageType: MessageType.SUCCESS});   
     this.list();
   }
 
   handleErrorDelete(error: any): void {
-    this.messageDisplayerService.emitError(error);    
+    this.messageDisplayerService.emitError(error);
   }
 
   abrirDialog(horasExtras: HorasExtras | null = null) {
