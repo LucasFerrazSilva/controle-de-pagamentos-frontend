@@ -16,14 +16,6 @@
                 </button>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Status</mat-label>
-                <mat-select [(value)]="filtros.status">
-                    <mat-option *ngFor="let status of allStatus" [value]="status">
-                        {{status | titlecase }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
                 <mat-label>Perfil</mat-label>
                 <mat-select [(value)]="filtros.perfil">
                     <mat-option *ngFor="let status of allPerfil" [value]="status">
@@ -33,6 +25,14 @@
                 <button *ngIf="filtros.perfil" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.perfil=''">
                     <mat-icon>close</mat-icon>
                 </button>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Status</mat-label>
+                <mat-select [(value)]="filtros.status">
+                    <mat-option *ngFor="let status of allStatus" [value]="status">
+                        {{status | titlecase }}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
             <button id="btn-filter" mat-fab extended type="button" (click)="list()"
                 color="primary"><mat-icon>search</mat-icon> Pesquisar</button>

@@ -74,7 +74,20 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
     this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_GESTOR).subscribe(data => this.aprovadores = data);
     this.userPerfil = this.tokenService.getLoggedUser()?.perfil;
     this.userId = this.tokenService.getLoggedUser()?.id;
-    this.displayedColumns = this.userPerfil != 'ROLE_USER'? ['user.nome', 'dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'] : ['dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status', 'acoes'];
+    
+    this.buildColumns();
+  }
+
+  buildColumns() {
+    this.displayedColumns = [];
+
+    if (this.userPerfil != 'ROLE_USER')
+      this.displayedColumns.push('user.nome');
+
+    this.displayedColumns = this.displayedColumns.concat(['dataHoraInicio', 'dataHoraFim', 'descricao', 'aprovador.nome', 'status']);
+
+    if (this.filtros.status == HorasExtrasStatus.SOLICITADO)
+      this.displayedColumns.push('acoes');
   }
 
   ngAfterViewInit(): void {
@@ -101,6 +114,8 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
       error: err => this.messageDisplayerService.emitError(err),
       complete: () => this.loadingService.emit(false)
     });
+
+    this.buildColumns();
   }
 
   loadData(page: Page<HorasExtras>) {

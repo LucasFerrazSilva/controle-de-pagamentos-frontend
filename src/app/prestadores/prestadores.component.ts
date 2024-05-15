@@ -28,7 +28,7 @@ export class PrestadoresComponent {
   allPerfil = Object.keys(UserPerfil)
   perfilSelected = UserPerfil.ROLE_USER;
   page: Page<User> | undefined;
-  displayedColumns: string[] = ['nome', 'email', 'perfil', 'salario', 'acoes'];
+  displayedColumns: string[] = [];
   dataSource!: MatTableDataSource<User>;
   filtros = {
     status: UserStatus.ATIVO,
@@ -50,10 +50,18 @@ export class PrestadoresComponent {
 
   ngOnInit(): void {
     this.toolbarService.emitPageName("Prestadores");
+    this.buildColumns();
   }
 
   ngAfterViewInit(): void {
     this.list();
+  }
+
+  buildColumns() {
+    this.displayedColumns = ['nome', 'email', 'perfil', 'salario'];
+
+    if (this.filtros.status == UserStatus.ATIVO)
+      this.displayedColumns.push('acoes');
   }
 
   list() {
@@ -71,6 +79,8 @@ export class PrestadoresComponent {
       error: err => this.messageDisplayerService.emitError(err),
       complete: () => this.loadingService.emit(false)
     });
+    
+    this.buildColumns();
   }
 
   loadData(page: Page<User>) {
