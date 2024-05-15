@@ -9,9 +9,13 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class DialogConfirmComponent {
 
   message: string;
+  color: string = 'warn';
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.message = data['message'];
+
+    if (data['color'])
+      this.color = data['color'];
   }
   
 }

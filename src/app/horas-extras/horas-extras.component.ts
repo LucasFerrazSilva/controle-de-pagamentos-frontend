@@ -143,21 +143,28 @@ export class HorasExtrasComponent implements OnInit, AfterViewInit  {
   }
 
   avaliar(item: HorasExtras, status: HorasExtrasStatus){
-    this.loadingService.emit(true);
-    let dto = {
-      id: item.id,
-      status: status
-    }
+    const message = `Tem certeza que deseja ${status == HorasExtrasStatus.APROVADO ? 'aprovar' : 'recusar'} o registro do dia ${new Date(item.dataHoraInicio).toLocaleDateString('pt-BR')}?`;
+    const dialogRef = this.dialog.open(DialogConfirmComponent, { data: { message, color: status == HorasExtrasStatus.APROVADO ? 'primary' : 'warn' } });
+    
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.loadingService.emit(true);
+        let dto = {
+          id: item.id,
+          status: status
+        }
 
-    this.service.avaliar(dto).subscribe({
-      next: resp => this.handleSuccessAvaliation(resp),
-      error: error => this.messageDisplayerService.emitError(error),
-      complete: () => this.loadingService.emit(false)
+        this.service.avaliar(dto).subscribe({
+          next: resp => this.handleSuccessAvaliation(resp, status),
+          error: error => this.messageDisplayerService.emitError(error),
+          complete: () => this.loadingService.emit(false)
+        });
+      }
     });
   }
 
-  handleSuccessAvaliation(resp:Object): void{
-    this.messageDisplayerService.emit({message: "Registro avaliado com sucesso", messageType: MessageType.SUCCESS});   
+  handleSuccessAvaliation(resp:Object, status: HorasExtrasStatus): void{
+    this.messageDisplayerService.emit({message: `Registro ${status == HorasExtrasStatus.APROVADO ? 'aprovado' : 'recusado'} com sucesso`, messageType: MessageType.SUCCESS});   
     this.list();
   }
 
