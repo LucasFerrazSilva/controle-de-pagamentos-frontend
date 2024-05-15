@@ -4,7 +4,7 @@
             <div id="filters">
               <mat-form-field>
                   <mat-label>Nome</mat-label>
-                  <input matInput required [(ngModel)]="filtros.nome" placeholder="nome">
+                  <input matInput [(ngModel)]="filtros.nome" placeholder="nome" (keyup.enter)="list()">
                   
                   <button *ngIf="filtros.nome" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.nome=''">
                     <mat-icon>close</mat-icon>
@@ -12,7 +12,7 @@
               </mat-form-field>
               <mat-form-field>
                 <mat-label>Valor</mat-label>
-                <input matInput required [(ngModel)]="filtros.valor" placeholder="valor">
+                <input matInput [(ngModel)]="filtros.valor" placeholder="valor" (keyup.enter)="list()">
                   
                 <button *ngIf="filtros.valor" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.valor=''">
                   <mat-icon>close</mat-icon>

@@ -3,14 +3,14 @@
         <div id="filters">
             <mat-form-field>
                 <mat-label>Nome</mat-label>
-                <input matInput required [(ngModel)]="filtros.nome" placeholder="nome">
+                <input matInput [(ngModel)]="filtros.nome" placeholder="nome" (keyup.enter)="list()">
                 <button *ngIf="filtros.nome" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.nome=''">
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Email</mat-label>
-                <input matInput required [(ngModel)]="filtros.email" placeholder="nome">
+                <input matInput [(ngModel)]="filtros.email" placeholder="email" (keyup.enter)="list()">
                 <button *ngIf="filtros.email" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.email=''">
                     <mat-icon>close</mat-icon>
                 </button>

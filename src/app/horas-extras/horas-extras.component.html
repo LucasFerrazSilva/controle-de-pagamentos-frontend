@@ -32,7 +32,7 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Descrição</mat-label>
-                <input matInput [(ngModel)]="filtros.descricao">
+                <input matInput [(ngModel)]="filtros.descricao" (keyup.enter)="list()">
                 <button *ngIf="filtros.descricao" matSuffix mat-icon-button aria-label="Clear"
                     (click)="filtros.descricao=''">
                     <mat-icon>close</mat-icon>
