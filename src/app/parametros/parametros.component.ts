@@ -26,7 +26,7 @@ export class ParametrosComponent implements OnInit {
   allStatus = Object.keys(ParametroStatus);
   statusSelected = ParametroStatus.ATIVO;
   dataSource!: MatTableDataSource<ParametroDTO>;
-  displayedColumns: string[] = ['nome', 'valor'];
+  displayedColumns: string[] = ['nome', 'valor', 'acao'];
   status: string = 'ATIVO';
   formGroup!: FormGroup;
   filtros = { 
