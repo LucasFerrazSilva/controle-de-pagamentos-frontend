@@ -18,12 +18,16 @@ export class MessageDisplayerService {
   }
 
   emitError(error: HttpErrorResponse) {
-    if (error.error.message)
-      this.emit({message: error.error.message, messageType: MessageType.ERROR});
-    else {
-      error.error.forEach((err: Error) => {
-        this.emit({message: err.message, messageType: MessageType.ERROR});
-      });
+    try {
+      if (error.error.message)
+        this.emit({message: error.error.message, messageType: MessageType.ERROR});
+      else {
+        error.error.forEach((err: Error) => {
+          this.emit({message: err.message, messageType: MessageType.ERROR});
+        });
+      }
+    } catch (e) {
+      this.emit({message: 'Algo deu errado', messageType: MessageType.ERROR});      
     }
   }
 
