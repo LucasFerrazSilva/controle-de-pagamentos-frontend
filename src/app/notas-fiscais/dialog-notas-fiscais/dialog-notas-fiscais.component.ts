@@ -12,12 +12,14 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-dialog-notas-fiscais',
   templateUrl: './dialog-notas-fiscais.component.html',
-  styleUrls: ['./dialog-notas-fiscais.component.scss']
+  styleUrls: ['./dialog-notas-fiscais.component.scss'],
 })
 export class DialogNotasFiscaisComponent implements OnInit {
 
   notaFiscal: NotaFiscal | undefined;
   formGroup!: FormGroup;
+  anos: number[] | undefined;
+  meses: undefined;
   prestadores!: User[];
 
   constructor(
@@ -32,6 +34,8 @@ export class DialogNotasFiscaisComponent implements OnInit {
 
     if (data.notaFiscal)
       this.notaFiscal = data.notaFiscal;
+    this.meses = data.meses;
+    this.anos = data.anos;
   }
 
   ngOnInit(): void {
@@ -87,6 +91,4 @@ export class DialogNotasFiscaisComponent implements OnInit {
     this.messageDisplayerService.emitError(error);
     this.loadingService.emit(false);
   }
-
-  
 }

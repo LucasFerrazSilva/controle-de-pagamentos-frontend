@@ -13,15 +13,23 @@
                 </button>
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Mes</mat-label>
-                <input matInput required [(ngModel)]="filtros.mes" placeholder="nome">
+                <mat-label>Mês</mat-label>
+                <mat-select [(value)]="filtros.mes">
+                    <mat-option *ngFor="let mes of meses" [value]="mes.numero">
+                        {{ mes.nome }}
+                    </mat-option>
+                </mat-select>
                 <button *ngIf="filtros.mes" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.mes=''">
                     <mat-icon>close</mat-icon>
                 </button>
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Ano</mat-label>
-                <input matInput required [(ngModel)]="filtros.ano" placeholder="nome">
+                <mat-select [(value)]="filtros.ano">
+                    <mat-option *ngFor="let ano of anos" [value]="ano">
+                        {{ ano }}
+                    </mat-option>
+                </mat-select>
                 <button *ngIf="filtros.ano" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.ano=''">
                     <mat-icon>close</mat-icon>
                 </button>

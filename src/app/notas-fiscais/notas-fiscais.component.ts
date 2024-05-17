@@ -44,7 +44,22 @@ export class NotasFiscaisComponent {
     status: NotasFiscaisStatus.SOLICITADA,
   };
   tokenExpired = false;
-
+  meses = [
+    { nome: 'Janeiro', numero: 1 },
+    { nome: 'Fevereiro', numero: 2 },
+    { nome: 'Março', numero: 3 },
+    { nome: 'Abril', numero: 4 },
+    { nome: 'Maio', numero: 5 },
+    { nome: 'Junho', numero: 6 },
+    { nome: 'Julho', numero: 7 },
+    { nome: 'Agosto', numero: 8 },
+    { nome: 'Setembro', numero: 9 },
+    { nome: 'Outubro', numero: 10 },
+    { nome: 'Novembro', numero: 11 },
+    { nome: 'Dezembro', numero: 12 }
+  ];
+  anos: number[] = [];
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -64,6 +79,8 @@ export class NotasFiscaisComponent {
     if (this.tokenExpired)
       return;
 
+    const anoAtual = new Date().getFullYear();
+    this.anos = Array.from({ length: anoAtual - 1999 }, (_, i) => anoAtual - i);
     this.prestadoresService.listarPorPerfil(UserPerfil.ROLE_USER).subscribe(data => this.prestadores = data);
     this.toolbarService.emitPageName("Notas Fiscais");
     this.userPerfil = this.tokenService.getLoggedUser()?.perfil;
@@ -141,7 +158,7 @@ export class NotasFiscaisComponent {
 
   abrirDialog(notaFiscal: NotaFiscal | null = null) {
     if(notaFiscal) console.log(notaFiscal.userDTO.id);
-    const dialogRef = this.dialog.open(DialogNotasFiscaisComponent, { data: { notaFiscal, prestadores: this.prestadores } });
+    const dialogRef = this.dialog.open(DialogNotasFiscaisComponent, { data: { notaFiscal, anos: this.anos, meses: this.meses ,prestadores: this.prestadores } });
     dialogRef.afterClosed().subscribe(confirmed => {
       if(confirmed) {
         this.list();

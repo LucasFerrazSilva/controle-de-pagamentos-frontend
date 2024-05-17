@@ -3,16 +3,22 @@
     <form #form [formGroup]="formGroup" (ngSubmit)="submit()">
         <div class="row">
             <mat-form-field>
-                <mat-label>Mes</mat-label>
-                <input matInput type="number" min="0" max="12" formControlName="mes"/>
+                <mat-label>Mês</mat-label>
+                <mat-select formControlName="mes">
+                    <mat-option *ngFor="let mes of meses" [value]="mes.numero">
+                        {{ mes.nome }}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
-        </div>
-        <div class="row">
             <mat-form-field>
                 <mat-label>Ano</mat-label>
-                <input matInput type="number" min="2010" formControlName="ano"/>
+                <mat-select  formControlName="ano">
+                    <mat-option *ngFor="let ano of anos" [value]="ano">
+                        {{ ano }}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
-        </div>  
+        </div>
         <div class="row">
             <mat-form-field>
                 <mat-label>Valor</mat-label>
