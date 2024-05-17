@@ -1,5 +1,5 @@
 export interface AtualizarNotaFiscal{
-    idUsuario: number,
+    idUser: number,
     mes: number,
     ano: number,
     valor: number,

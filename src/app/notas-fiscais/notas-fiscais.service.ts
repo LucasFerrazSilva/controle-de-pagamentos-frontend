@@ -7,12 +7,8 @@ import { Page } from '../commons/pagination/page.interface';
 import { NotaFiscal } from './dto/nota-fiscal.interface';
 import { NovaNotaFiscal } from './dto/nova-nota-fiscal.interface';
 import { AtualizarNotaFiscal } from './dto/atualizar-nota-fiscal.interface';
-
-@Injectable({
-  providedIn: 'root'
-})
 const API_URL = environment.apiUrl;
-const ENDPOINT = API_URL + '/horas-extras';
+const ENDPOINT = API_URL + '/notas-fiscais';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +38,7 @@ export class NotasFiscaisService {
   }
 
   create(dto: NovaNotaFiscal) {
+    console.log(dto);
     return this.http.post(ENDPOINT, dto);
   }
 

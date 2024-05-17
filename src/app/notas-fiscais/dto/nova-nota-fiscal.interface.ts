@@ -1,5 +1,5 @@
 export interface NovaNotaFiscal{
-    idUsuario: number,
+    idUser: number,
     mes: number,
     ano: number,
     valor: number,

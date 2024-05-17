@@ -44,6 +44,8 @@ import { PrestadoresComponent } from './prestadores/prestadores.component';
 import { NovoPrestadorDialogComponent } from './prestadores/novo-prestador-dialog/novo-prestador-dialog.component';
 import { RoleLabelPipe } from './commons/pipes/role-label.pipe';
 import { NotasFiscaisComponent } from './notas-fiscais/notas-fiscais.component';
+import { DialogNotasFiscaisComponent } from './notas-fiscais/dialog-notas-fiscais/dialog-notas-fiscais.component';
+import { MonthNamePipePipe } from './commons/pipes/month-name-pipe.pipe';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import { NotasFiscaisComponent } from './notas-fiscais/notas-fiscais.component';
     NovoPrestadorDialogComponent,
     RoleLabelPipe,
     NotasFiscaisComponent,
+    DialogNotasFiscaisComponent,
+    MonthNamePipePipe,
   ],
   imports: [
     BrowserModule,

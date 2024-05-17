@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>{{ notaFiscal ? 'Atualizar' : 'Cadastrar' }} Nota Fiscal</h1>
+<mat-dialog-content>
+    <form #form [formGroup]="formGroup" (ngSubmit)="submit()">
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Mes</mat-label>
+                <input matInput type="number" min="0" max="12" formControlName="mes"/>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Ano</mat-label>
+                <input matInput type="number" min="2010" formControlName="ano"/>
+            </mat-form-field>
+        </div>  
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Valor</mat-label>
+                <input matInput type="number" min="0" formControlName="valor"/>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Prestador</mat-label>
+                <mat-select formControlName="idUser">
+                    <mat-option *ngFor="let prestador of prestadores" [value]="prestador.id">
+                        {{ prestador.nome }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="row">
+            <mat-form-field>
+                <mat-label>Caminho do arquivo</mat-label>
+                <input matInput formControlName="filePath"/>
+            </mat-form-field>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button (click)="submit()" color="primary" cdkFocusInitial [disabled]="formGroup.invalid">Salvar</button>
+  <button mat-stroked-button [mat-dialog-close]="false">Cancelar</button>
+</mat-dialog-actions>

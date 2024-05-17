@@ -8,6 +8,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ParametrosComponent } from './parametros/parametros.component';
 import { NovoParametroComponent } from './parametros/novo-parametro/novo-parametro.component';
 import { PrestadoresComponent } from './prestadores/prestadores.component';
+import { NotasFiscaisComponent } from './notas-fiscais/notas-fiscais.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [authGuard] },
@@ -17,6 +18,7 @@ const routes: Routes = [
     children: [{ path: 'novoParametro', component: NovoParametroComponent}]
   },
   { path: 'prestadores', component: PrestadoresComponent, canActivate: [authGuard], data: { role: ['ROLE_ADMIN', 'ROLE_GESTOR', 'ROLE_FINANCEIRO'] } },
+  { path: 'notas-fiscais', component: NotasFiscaisComponent, canActivate: [authGuard]},
   { path: '**', component: NotFoundComponent },
 ];
 
