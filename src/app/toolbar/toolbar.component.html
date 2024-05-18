@@ -5,18 +5,25 @@
     <button mat-icon-button [matMenuTriggerFor]="notificationsMenu" (menuOpened)="marcarComoVisualizadas()" (menuClosed)="menuNotificacoesClosed()">
         <mat-icon [matBadge]="numeroDeNotificacoes" matBadgeColor="warn" matBadgePosition="below" [matBadgeHidden]="numeroDeNotificacoes == 0">notifications</mat-icon>
     </button>
-    <mat-menu #notificationsMenu="matMenu">
+    <mat-menu #notificationsMenu="matMenu" class="menu-notificacoes">
         <button *ngFor="let notification of notifications" class="btn-notificacao" mat-menu-item [routerLink]="notification.path"
         [ngClass]="{'notificacao-visualizada': notification.status == NOTIFICACAO_VISUALIZADA}">
             <span>{{notification.descricao}}</span>
         </button>
+        <button *ngIf="notifications == null || notifications.length == 0" mat-menu-item>
+            Nenhuma notificação
+        </button>
     </mat-menu>
     
-    <button mat-mini-fab color="primary" [matMenuTriggerFor]="menu">
+    <button mat-fab extended color="primary" [matMenuTriggerFor]="menu" *ngIf="(user$ | async) as user">
         <mat-icon>person</mat-icon>
+        {{ user.nome }}
     </button>
-    <mat-menu #menu="matMenu">
-        <p *ngIf="(user$ | async) as user" id="user-name-item" mat-menu-item>{{ user.nome }}</p>
+    <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item (click)="mudarSenha()">
+            <mat-icon>key</mat-icon>
+            <span>Mudar senha</span>
+        </button>
         <button mat-menu-item (click)="logout()">
             <mat-icon>logout</mat-icon>
             <span>Sair</span>

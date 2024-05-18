@@ -40,23 +40,13 @@ export class NovoPrestadorDialogComponent implements OnInit {
     const repeteSenha = '';
     const salario = this.user ? this.user.salario : 0;
     const perfil = this.user ? this.user.perfil : UserPerfil.ROLE_USER; 
-    if(this.user){
       this.formGroup = this.formBuilder.group({
         nome: [nome, Validators.required],
         email: [email, [Validators.required, Validators.email]],
         salario: [salario, Validators.required],
         perfil: [perfil, Validators.required],
       }) 
-    } else {
-      this.formGroup = this.formBuilder.group({
-        nome: [nome, Validators.required],
-        email: [email, [Validators.required, Validators.email]],
-        senha: [senha, Validators.required],
-        repeteSenha: [repeteSenha, Validators.required],
-        salario: [salario, Validators.required],
-        perfil: [perfil, Validators.required],
-      })
-    }
+    
   }
 
   submit() {
@@ -67,7 +57,6 @@ export class NovoPrestadorDialogComponent implements OnInit {
       let dto = {
         nome: values.nome,
         email: values.email,
-        senha: values.senha,
         salario: values.salario,
         perfil: values.perfil,
       };

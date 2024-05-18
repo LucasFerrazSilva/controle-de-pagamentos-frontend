@@ -43,6 +43,7 @@ import { DialogHorasExtrasComponent } from './horas-extras/dialog-horas-extras/d
 import { PrestadoresComponent } from './prestadores/prestadores.component';
 import { NovoPrestadorDialogComponent } from './prestadores/novo-prestador-dialog/novo-prestador-dialog.component';
 import { RoleLabelPipe } from './commons/pipes/role-label.pipe';
+import { NovaSenhaDialogComponent } from './prestadores/nova-senha-dialog/nova-senha-dialog.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { RoleLabelPipe } from './commons/pipes/role-label.pipe';
     PrestadoresComponent,
     NovoPrestadorDialogComponent,
     RoleLabelPipe,
+    NovaSenhaDialogComponent,
   ],
   imports: [
     BrowserModule,
