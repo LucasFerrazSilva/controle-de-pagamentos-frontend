@@ -1,10 +1,6 @@
-.full-width {
-    width: 100%;
-}
-
 mat-card {
     width: fit-content;
-    min-width: 80%;
+    min-width: 65%;
     margin: 10px auto;
 }
 
@@ -12,8 +8,19 @@ mat-card {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
 }
 
 #btn-filter {
     margin-top: 5px;
+}
+
+.btn-aprovar {
+    color: #009921;
+}
+
+.column-descricao {
+    max-width: 300px;
+    overflow: hidden;
 }
