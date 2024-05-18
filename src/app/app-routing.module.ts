@@ -18,7 +18,7 @@ const routes: Routes = [
     children: [{ path: 'novoParametro', component: NovoParametroComponent}]
   },
   { path: 'prestadores', component: PrestadoresComponent, canActivate: [authGuard], data: { role: ['ROLE_ADMIN', 'ROLE_GESTOR', 'ROLE_FINANCEIRO'] } },
-  { path: 'notas-fiscais', component: NotasFiscaisComponent, canActivate: [authGuard], data: { role: ['ROLE_ADMIN', 'ROLE_GESTOR', 'ROLE_FINANCEIRO'] } },
+  { path: 'notas-fiscais', component: NotasFiscaisComponent, canActivate: [authGuard]},
   { path: '**', component: NotFoundComponent },
 ];
 

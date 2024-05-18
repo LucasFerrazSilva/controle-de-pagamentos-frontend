@@ -24,7 +24,7 @@ export class MenuComponent {
       icon: 'request_quote',
       routerLink: '/notas-fiscais',
       text: 'Notas fiscais',
-      requiredRoles: ['ROLE_ADMIN', 'ROLE_GESTOR', 'ROLE_FINANCEIRO']
+      requiredRoles: []
     },
     {
       icon: 'groups',
