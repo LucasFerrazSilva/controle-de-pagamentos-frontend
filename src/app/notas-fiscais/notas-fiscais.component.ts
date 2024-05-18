@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { NotasFiscaisStatus } from './dto/notas-fiscais-status.enum';
-import { UserStatus } from '../prestadores/dto/UserStatus.enum';
 import { NotaFiscal } from './dto/nota-fiscal.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { Page } from '../commons/pagination/page.interface';
@@ -163,6 +162,21 @@ export class NotasFiscaisComponent {
       if(confirmed) {
         this.list();
         this.messageDisplayerService.emit({message: 'Nota Fiscal salva com sucesso', messageType: MessageType.SUCCESS});
+      }
+    });
+  }
+
+  marcarComoPaga(item: NotaFiscal) {
+    const message = `Tem certeza que deseja marcar como paga a nota fiscal da data ${item.mes}/${item.ano} do prestador ${item.userDTO.nome}?`;
+    const dialogRef = this.dialog.open(DialogConfirmComponent, { data: { message, color: 'primary' }});
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.loadingService.emit(true);
+        this.service.marcarComoPaga(item.id).subscribe({
+          next: resp => this.handleSuccessDelete(resp),
+          error: error => this.handleErrorDelete(error),
+          complete: () => this.loadingService.emit(false)
+        });
       }
     });
   }
