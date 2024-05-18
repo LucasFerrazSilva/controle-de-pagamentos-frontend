@@ -1,0 +1,25 @@
+<h1 mat-dialog-title>Atualizar senha</h1>
+<mat-dialog-content>
+    <form #form [formGroup]="formGroup" (ngSubmit)="submit()">
+        <mat-form-field >
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hideSenha ? 'password' : 'text'" formControlName="novaSenha"/>
+            <button type="button" mat-icon-button matSuffix (click)="hideSenha = !hideSenha" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hideSenha">
+                <mat-icon>{{hideSenha ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Repita a senha</mat-label>
+            <input matInput [type]="hideRepeteSenha ? 'password' : 'text'" formControlName="repeteSenha"/>
+            <button type="button" mat-icon-button matSuffix (click)="hideRepeteSenha = !hideRepeteSenha" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hideRepeteSenha">
+                <mat-icon>{{hideRepeteSenha ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button (click)="submit()" color="primary" cdkFocusInitial [disabled]="formGroup.invalid">Salvar</button>
+    <button mat-stroked-button [mat-dialog-close]="false">Cancelar</button>
+  </mat-dialog-actions>
