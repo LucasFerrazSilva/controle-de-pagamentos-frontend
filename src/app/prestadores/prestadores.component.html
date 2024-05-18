@@ -10,7 +10,7 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-label>Email</mat-label>
-                <input matInput [(ngModel)]="filtros.email" placeholder="nome" (keyup.enter)="list()">
+                <input matInput [(ngModel)]="filtros.email" placeholder="email" (keyup.enter)="list()">
                 <button *ngIf="filtros.email" matSuffix mat-icon-button aria-label="Clear" (click)="filtros.email=''">
                     <mat-icon>close</mat-icon>
                 </button>
