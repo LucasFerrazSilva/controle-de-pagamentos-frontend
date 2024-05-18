@@ -43,14 +43,12 @@ export class DialogNotasFiscaisComponent implements OnInit {
     const mes = this.notaFiscal ? this.notaFiscal.mes : '';
     const ano = this.notaFiscal ? this.notaFiscal.ano : '';
     const valor = this.notaFiscal ? this.notaFiscal.valor : '';
-    const filePath = this.notaFiscal ? this.notaFiscal.filePath : '';
 
     this.formGroup = this.formBuilder.group({
       idUser: [idUser, Validators.required],
       mes: [mes, Validators.required],
       ano: [ano, Validators.required],
-      valor: [valor, Validators.required],
-      filePath: [filePath, Validators.required]
+      valor: [valor, Validators.required]
     });
   }
 
@@ -61,8 +59,7 @@ export class DialogNotasFiscaisComponent implements OnInit {
       idUser: values.idUser,
       mes: values.mes,
       ano: values.ano,
-      valor: values.valor,
-      filePath: values.filePath
+      valor: values.valor
     };
 
     this.loadingService.emit(true);
