@@ -9,6 +9,7 @@ import { Page } from '../commons/pagination/page.interface';
 import { NovoParametroComponent } from '../parametros/novo-parametro/novo-parametro.component';
 import { NovoUsuarioDTO } from './dto/NovoUsuarioDTO.interface';
 import { UpdateUsuarioDTO } from './dto/UpdateUsuarioDTO.interface';
+import { NovaSenha } from './dto/nova-senha.interface';
 
 const API_URL = environment.apiUrl;
 const ENDPOINT = API_URL + '/user';
@@ -55,6 +56,11 @@ export class PrestadoresService {
   delete(id: number) {
     const endpoint = ENDPOINT + `/${id}`;
     return this.http.delete(endpoint);
+  }
+
+  mudarSenha(dto: NovaSenha){
+    const endpoint = ENDPOINT + "/mudar-senha"
+    return this.http.put(endpoint, dto);
   }
 
 }

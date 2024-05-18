@@ -6,6 +6,10 @@ import { User } from '../auth/user.interface';
 import { ToolbarService } from './toolbar.service';
 import { Notificacao } from './dto/notificacao.interface';
 import { NotificacaoStatus } from './dto/notificacao-status.enum';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDisplayerService } from '../commons/message-displayer/message-displayer.service';
+import { NovaSenhaDialogComponent } from '../prestadores/nova-senha-dialog/nova-senha-dialog.component';
+import { MessageType } from '../commons/message-displayer/message-type.enum';
 
 @Component({
   selector: 'app-toolbar',
@@ -23,6 +27,8 @@ export class ToolbarComponent {
   constructor(
     private loginService: LoginService,
     private service: ToolbarService,
+    private dialog: MatDialog,
+    private messageDisplayerService: MessageDisplayerService,
     tokenService: TokenService
   ) {
     this.user$ = tokenService.getLoggedUserObservable();
@@ -46,6 +52,14 @@ export class ToolbarComponent {
 
   logout() {
     this.loginService.logout();
+  }
+  mudarSenha(){
+    const dialogRef = this.dialog.open(NovaSenhaDialogComponent);
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if(confirmed) {
+        this.messageDisplayerService.emit({message: 'Senha salva com sucesso', messageType: MessageType.SUCCESS});
+      }
+    });
   }
 
   marcarComoVisualizadas() {

@@ -58,7 +58,7 @@ export class PrestadoresComponent {
   }
 
   buildColumns() {
-    this.displayedColumns = ['nome', 'email', 'perfil', 'salario'];
+    this.displayedColumns = ['nome', 'email', 'perfil', 'salario', 'status'];
 
     if (this.filtros.status == UserStatus.ATIVO)
       this.displayedColumns.push('acoes');
