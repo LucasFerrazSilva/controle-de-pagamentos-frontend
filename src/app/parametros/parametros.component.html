@@ -24,7 +24,7 @@
             </div>
             <br><br>
               
-            <table mat-table [dataSource]="dataSource"
+            <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc"
             (matSortChange)="list()">
                 <ng-container matColumnDef="nome">
                     <th mat-header-cell *matHeaderCellDef> Nome </th>

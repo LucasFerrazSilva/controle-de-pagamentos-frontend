@@ -13,7 +13,7 @@ import { MessageType } from 'src/app/commons/message-displayer/message-type.enum
   templateUrl: './novo-parametro.component.html',
   styleUrls: ['./novo-parametro.component.scss']
 })
-export class NovoParametroComponent implements OnInit  {
+export class NovoParametroComponent implements OnInit {
   parametroDTO: ParametroDTO | undefined;
   formGroup!: FormGroup;
 
@@ -24,13 +24,11 @@ export class NovoParametroComponent implements OnInit  {
     private messageDisplayerService: MessageDisplayerService,
     private loadingService: LoadingService,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ){
-    this.parametroDTO = data.parametroDTO;
+  ) {
+    if (this.data) this.parametroDTO = data.parametroDTO;
   }
 
   ngOnInit(): void {
-    
-
     this.buildForm();
   }
 
@@ -44,23 +42,23 @@ export class NovoParametroComponent implements OnInit  {
       valor: [valor, [Validators.required]]
     });
   }
-  cancelar(){
+  cancelar() {
     this.dialogRef.close();
   }
-  submit(){
-    
+  submit() {
     const updateParametroDTO = this.formGroup.value;
-    this.parametrosService.update(this.data.id, updateParametroDTO).subscribe({
-      next: resp => this.handleSuccess(resp),
-      error: error => this.handleError(error),
-      complete: () => this.loadingService.emit(false)
-    });
-    this.dialogRef.close(true);
-
+    if (this.parametroDTO) {
+      this.parametrosService.update(this.parametroDTO.id, updateParametroDTO).subscribe({
+        next: resp => this.handleSuccess(resp),
+        error: error => this.handleError(error),
+        complete: () => this.loadingService.emit(false)
+      });
+      this.dialogRef.close(true);
+    }
   }
 
   handleSuccess(resp: Object): void {
-    this.messageDisplayerService.emit({message: 'Parametro salvo com sucesso', messageType: MessageType.SUCCESS});
+    this.messageDisplayerService.emit({ message: 'Parametro salvo com sucesso', messageType: MessageType.SUCCESS });
     this.dialogRef.close(true);
     this.loadingService.emit(false);
   }

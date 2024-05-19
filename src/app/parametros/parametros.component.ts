@@ -61,7 +61,7 @@ export class ParametrosComponent implements OnInit {
     let paginationParameters: PaginationParameters = {
       size: this.paginator.pageSize,
       page: this.paginator.pageIndex,
-      sort: ``
+      sort: `${this.sort.active},${this.sort.direction}`
     };
 
     this.parametrosService.list(this.filtros, paginationParameters).subscribe({
