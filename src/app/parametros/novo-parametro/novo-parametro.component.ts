@@ -14,6 +14,7 @@ import { MessageType } from 'src/app/commons/message-displayer/message-type.enum
   styleUrls: ['./novo-parametro.component.scss']
 })
 export class NovoParametroComponent implements OnInit  {
+  parametroDTO: ParametroDTO | undefined;
   formGroup!: FormGroup;
 
   constructor(
@@ -22,17 +23,21 @@ export class NovoParametroComponent implements OnInit  {
     private formBuilder: FormBuilder,
     private messageDisplayerService: MessageDisplayerService,
     private loadingService: LoadingService,
-    @Inject(MAT_DIALOG_DATA) public data: ParametroDTO
-  ){}
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ){
+    this.parametroDTO = data.parametroDTO;
+  }
 
   ngOnInit(): void {
+    
+
     this.buildForm();
   }
 
   buildForm() {
-    const nome = this.data ? this.data.nome : "";
-    const valor = this.data ? this.data.valor : "";
-    const id = this.data ? this.data.id : "";
+    const nome = this.parametroDTO?.nome;
+    const valor = this.parametroDTO?.valor;
+    const id = this.parametroDTO?.id;
 
     this.formGroup = this.formBuilder.group({
       nome: [nome, [Validators.required]],
