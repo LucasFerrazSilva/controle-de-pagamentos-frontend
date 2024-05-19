@@ -27,7 +27,7 @@ import { DialogEnviarNotaFiscalComponent } from './dialog-enviar-nota-fiscal/dia
   styleUrls: ['./notas-fiscais.component.scss']
 })
 export class NotasFiscaisComponent {
-    
+
   allStatus = Object.keys(NotasFiscaisStatus);
   statusSelected = NotasFiscaisStatus.SOLICITADA;
   userPerfil: string | undefined;
@@ -59,7 +59,7 @@ export class NotasFiscaisComponent {
     { nome: 'Dezembro', numero: 12 }
   ];
   anos: number[] = [];
-  
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -72,7 +72,7 @@ export class NotasFiscaisComponent {
     private messageDisplayerService: MessageDisplayerService,
     private tokenService: TokenService,
     private loginService: LoginService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.tokenExpired = this.loginService.checkTokenExpired();
@@ -97,7 +97,7 @@ export class NotasFiscaisComponent {
 
     if (this.userPerfil != 'ROLE_USER')
       this.displayedColumns.push('user.nome');
-    
+
     this.displayedColumns = this.displayedColumns.concat(['mes', 'ano', 'valor', 'status', 'acoes']);
 
   }
@@ -117,7 +117,7 @@ export class NotasFiscaisComponent {
       error: err => this.messageDisplayerService.emitError(err),
       complete: () => this.loadingService.emit(false)
     });
-    
+
     this.buildColumns();
   }
 
@@ -131,9 +131,9 @@ export class NotasFiscaisComponent {
     this.paginator.pageSize = page.pageable.pageSize;
   }
 
-  delete(item: NotaFiscal){
+  delete(item: NotaFiscal) {
     const message = `Tem certeza que deseja excluir da data ${item.mes}/${item.ano}?`;
-    const dialogRef = this.dialog.open(DialogConfirmComponent, { data: { message }});
+    const dialogRef = this.dialog.open(DialogConfirmComponent, { data: { message } });
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         this.loadingService.emit(true);
@@ -147,7 +147,7 @@ export class NotasFiscaisComponent {
   }
 
   handleSuccessDelete(resp: Object): void {
-    this.messageDisplayerService.emit({message: 'Registro excluído com sucesso', messageType: MessageType.SUCCESS});   
+    this.messageDisplayerService.emit({ message: 'Registro excluído com sucesso', messageType: MessageType.SUCCESS });
     this.list();
   }
 
@@ -157,19 +157,19 @@ export class NotasFiscaisComponent {
   }
 
   abrirDialog(notaFiscal: NotaFiscal | null = null) {
-    if(notaFiscal) console.log(notaFiscal.userDTO.id);
-    const dialogRef = this.dialog.open(DialogNotasFiscaisComponent, { data: { notaFiscal, anos: this.anos, meses: this.meses ,prestadores: this.prestadores } });
+    if (notaFiscal) console.log(notaFiscal.userDTO.id);
+    const dialogRef = this.dialog.open(DialogNotasFiscaisComponent, { data: { notaFiscal, anos: this.anos, meses: this.meses, prestadores: this.prestadores } });
     dialogRef.afterClosed().subscribe(confirmed => {
-      if(confirmed) {
+      if (confirmed) {
         this.list();
-        this.messageDisplayerService.emit({message: 'Nota Fiscal salva com sucesso', messageType: MessageType.SUCCESS});
+        this.messageDisplayerService.emit({ message: 'Nota Fiscal salva com sucesso', messageType: MessageType.SUCCESS });
       }
     });
   }
 
   marcarComoPaga(item: NotaFiscal) {
     const message = `Tem certeza que deseja marcar como paga a nota fiscal da data ${item.mes}/${item.ano} do prestador ${item.userDTO.nome}?`;
-    const dialogRef = this.dialog.open(DialogConfirmComponent, { data: { message, color: 'primary' }});
+    const dialogRef = this.dialog.open(DialogConfirmComponent, { data: { message, color: 'primary' } });
     dialogRef.afterClosed().subscribe(confirmed => {
       if (confirmed) {
         this.loadingService.emit(true);
@@ -181,17 +181,36 @@ export class NotasFiscaisComponent {
       }
     });
   }
-  enviarNotaFiscal(item: NotaFiscal){
-    const dialogRef = this.dialog.open(DialogEnviarNotaFiscalComponent, { data: { idNotaFiscal: item.id }});
-    dialogRef.afterClosed().subscribe(confirmed =>{
+  enviarNotaFiscal(item: NotaFiscal) {
+    const dialogRef = this.dialog.open(DialogEnviarNotaFiscalComponent, { data: { idNotaFiscal: item.id } });
+    dialogRef.afterClosed().subscribe(confirmed => {
       this.list();
     });
   }
-  baixarNotaFiscal(item: NotaFiscal){
+  baixarNotaFiscal(item: NotaFiscal) {
     this.service.baixarNotaFiscal(item.id).subscribe({
-      next: resp => this.messageDisplayerService.emit({message: 'Nota Fiscal salva com sucesso', messageType: MessageType.SUCCESS}),
-      error: error => this.handleErrorDelete(error),
-      complete: () => this.loadingService.emit(false)
-    })
+      next: response => {
+
+        const contentDisposition = response.headers.get('Content-disposition');
+        let filename = 'downloadedFile.pdf';
+        if (contentDisposition) {
+          filename = contentDisposition.split('=')[1];
+        }
+        if (response.body) {
+          const blob = new Blob([response.body], { type: response.body.type });
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+          this.messageDisplayerService.emit({ message: 'Nota Fiscal baixada com sucesso', messageType: MessageType.SUCCESS });
+        }
+      },
+      error: error => this.messageDisplayerService.emitError(error)
+
+    });
   }
 }

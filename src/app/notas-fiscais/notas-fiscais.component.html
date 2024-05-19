@@ -92,7 +92,7 @@
                       <button mat-icon-button color="warn" matTooltip="Excluir" *ngIf="row.status == 'SOLICITADA' && userPerfil != 'ROLE_USER'" (click)="delete(row)"><mat-icon>delete</mat-icon></button>
                       <button mat-icon-button class="btn-aprovar" matTooltip="Marcar como paga" *ngIf="row.status == 'ENVIADA' && userPerfil != 'ROLE_USER'" (click)="marcarComoPaga(row)"><mat-icon>check</mat-icon></button>
                       <button mat-icon-button class="btn-aprovar" matTooltip="Enviar Nota Fiscal" *ngIf="row.status == 'SOLICITADA'" (click)="enviarNotaFiscal(row)"><mat-icon>attach_file</mat-icon></button>
-                      <button mat-icon-button class="btn-aprovar" matTooltip="Baixar Nota Fiscal" *ngIf="row.status == 'ENVIADA'" (click)="baixarNotaFiscal(row)"><mat-icon>attach_file</mat-icon></button>
+                      <button mat-icon-button class="btn-aprovar" matTooltip="Baixar Nota Fiscal" *ngIf="row.status == 'ENVIADA' || row.status == 'PAGA'" (click)="baixarNotaFiscal(row)"><mat-icon>download</mat-icon></button>
                   </td>
                 </ng-container>
 

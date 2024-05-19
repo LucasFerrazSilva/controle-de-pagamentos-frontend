@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { PaginationParameters } from '../commons/pagination/pagination-parameters.interface';
@@ -59,6 +59,11 @@ export class NotasFiscaisService {
   enviarNotaFiscal(id: number, formData: FormData){
     const endpoint = ENDPOINT + `/upload/${id}`;
     return this.http.put(endpoint, formData);
+  }
+
+  baixarNotaFiscal(id: number): Observable<HttpResponse<Blob>>{
+    const endpoint = ENDPOINT + `/download/${id}`
+    return this.http.get(endpoint, { observe: 'response', responseType: 'blob'});
   }
 }
 
