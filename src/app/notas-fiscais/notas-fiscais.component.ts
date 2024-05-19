@@ -187,4 +187,11 @@ export class NotasFiscaisComponent {
       this.list();
     });
   }
+  baixarNotaFiscal(item: NotaFiscal){
+    this.service.baixarNotaFiscal(item.id).subscribe({
+      next: resp => this.messageDisplayerService.emit({message: 'Nota Fiscal salva com sucesso', messageType: MessageType.SUCCESS}),
+      error: error => this.handleErrorDelete(error),
+      complete: () => this.loadingService.emit(false)
+    })
+  }
 }
