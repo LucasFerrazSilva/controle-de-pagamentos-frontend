@@ -26,8 +26,8 @@ export class DialogEnviarNotaFiscalComponent implements OnInit {
     private loadingService: LoadingService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { 
-    if(data.id){
-      this.idNotaFiscal = data.id;
+    if(data.idNotaFiscal){
+      this.idNotaFiscal = data.idNotaFiscal;
     }
   }
 
