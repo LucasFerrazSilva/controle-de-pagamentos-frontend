@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Enviar Nota Fiscal</h1>
+<mat-dialog-content>
+    <form #form [formGroup]="formGroup" (ngSubmit)="submit()">
+            <input type="file" accept=".pdf" class="file-input" (change)="onFileSelected($event)" #fileUpload>
+            <div class="file-upload">
+                <div class="file-name">
+                    {{ fileName || "Nenhuma nota fiscal selecionada"}}
+                </div>
+                <button mat-flat-button type="button" color="primary" class="upload-btn" (click)="fileUpload.click()">Selecionar</button>
+            </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button (click)="submit()" color="primary" cdkFocusInitial
+        [disabled]="formGroup.invalid">Enviar</button>
+    <button mat-stroked-button [mat-dialog-close]="false">Cancelar</button>
+</mat-dialog-actions>

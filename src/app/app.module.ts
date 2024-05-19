@@ -47,6 +47,7 @@ import { NotasFiscaisComponent } from './notas-fiscais/notas-fiscais.component';
 import { DialogNotasFiscaisComponent } from './notas-fiscais/dialog-notas-fiscais/dialog-notas-fiscais.component';
 import { MonthNamePipePipe } from './commons/pipes/month-name-pipe.pipe';
 import { NovaSenhaDialogComponent } from './prestadores/nova-senha-dialog/nova-senha-dialog.component';
+import { DialogEnviarNotaFiscalComponent } from './notas-fiscais/dialog-enviar-nota-fiscal/dialog-enviar-nota-fiscal.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { NovaSenhaDialogComponent } from './prestadores/nova-senha-dialog/nova-s
     DialogNotasFiscaisComponent,
     MonthNamePipePipe,
     NovaSenhaDialogComponent,
+    DialogEnviarNotaFiscalComponent,
   ],
   imports: [
     BrowserModule,

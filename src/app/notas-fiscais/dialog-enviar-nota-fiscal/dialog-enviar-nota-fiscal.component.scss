@@ -1,3 +1,17 @@
+.file-input {
+    display: none;
+}
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.file-name {
+    margin-right: 10px; 
+}
+
 mat-dialog-actions {
     display: flex;
     justify-content: space-between;
@@ -25,18 +39,4 @@ mat-dialog-content {
 
 mat-form-field {
     width: 100%;
-}
-
-.row {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-}
-
-.hora {
-    width: 50%;
-}
-
-.file-upload{
-    display:flex;
 }
