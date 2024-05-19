@@ -19,6 +19,7 @@ import { PrestadoresService } from '../prestadores/prestadores.service';
 import { UserPerfil } from '../auth/user-perfil.enum';
 import { User } from '../auth/user.interface';
 import { DialogNotasFiscaisComponent } from './dialog-notas-fiscais/dialog-notas-fiscais.component';
+import { DialogEnviarNotaFiscalComponent } from './dialog-enviar-nota-fiscal/dialog-enviar-nota-fiscal.component';
 
 @Component({
   selector: 'app-notas-fiscais',
@@ -180,5 +181,10 @@ export class NotasFiscaisComponent {
       }
     });
   }
-
+  enviarNotaFiscal(item: NotaFiscal){
+    const dialogRef = this.dialog.open(DialogEnviarNotaFiscalComponent, { data: { idNotaFiscal: item.id }});
+    dialogRef.afterClosed().subscribe(confirmed =>{
+      this.list();
+    });
+  }
 }

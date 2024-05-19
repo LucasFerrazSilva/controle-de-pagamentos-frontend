@@ -52,8 +52,13 @@ export class NotasFiscaisService {
   }
 
   marcarComoPaga(id:number) {
-    const endpoint = ENDPOINT + `/marcar-como-paga/${id}`
+    const endpoint = ENDPOINT + `/marcar-como-paga/${id}`;
     return this.http.put(endpoint, {});
+  }
+
+  enviarNotaFiscal(id: number, formData: FormData){
+    const endpoint = ENDPOINT + `/upload/${id}`;
+    return this.http.put(endpoint, formData);
   }
 }
 
