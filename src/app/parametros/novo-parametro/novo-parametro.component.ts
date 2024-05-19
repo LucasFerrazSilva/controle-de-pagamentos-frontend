@@ -13,7 +13,8 @@ import { MessageType } from 'src/app/commons/message-displayer/message-type.enum
   templateUrl: './novo-parametro.component.html',
   styleUrls: ['./novo-parametro.component.scss']
 })
-export class NovoParametroComponent implements OnInit  {
+export class NovoParametroComponent implements OnInit {
+  parametroDTO: ParametroDTO | undefined;
   formGroup!: FormGroup;
 
   constructor(
@@ -22,40 +23,42 @@ export class NovoParametroComponent implements OnInit  {
     private formBuilder: FormBuilder,
     private messageDisplayerService: MessageDisplayerService,
     private loadingService: LoadingService,
-    @Inject(MAT_DIALOG_DATA) public data: ParametroDTO
-  ){}
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+    if (this.data) this.parametroDTO = data.parametroDTO;
+  }
 
   ngOnInit(): void {
     this.buildForm();
   }
 
   buildForm() {
-    const nome = this.data ? this.data.nome : "";
-    const valor = this.data ? this.data.valor : "";
-    const id = this.data ? this.data.id : "";
+    const nome = this.parametroDTO?.nome;
+    const valor = this.parametroDTO?.valor;
+    const id = this.parametroDTO?.id;
 
     this.formGroup = this.formBuilder.group({
       nome: [nome, [Validators.required]],
       valor: [valor, [Validators.required]]
     });
   }
-  cancelar(){
+  cancelar() {
     this.dialogRef.close();
   }
-  submit(){
-    
+  submit() {
     const updateParametroDTO = this.formGroup.value;
-    this.parametrosService.update(this.data.id, updateParametroDTO).subscribe({
-      next: resp => this.handleSuccess(resp),
-      error: error => this.handleError(error),
-      complete: () => this.loadingService.emit(false)
-    });
-    this.dialogRef.close(true);
-
+    if (this.parametroDTO) {
+      this.parametrosService.update(this.parametroDTO.id, updateParametroDTO).subscribe({
+        next: resp => this.handleSuccess(resp),
+        error: error => this.handleError(error),
+        complete: () => this.loadingService.emit(false)
+      });
+      this.dialogRef.close(true);
+    }
   }
 
   handleSuccess(resp: Object): void {
-    this.messageDisplayerService.emit({message: 'Parametro salvo com sucesso', messageType: MessageType.SUCCESS});
+    this.messageDisplayerService.emit({ message: 'Parametro salvo com sucesso', messageType: MessageType.SUCCESS });
     this.dialogRef.close(true);
     this.loadingService.emit(false);
   }

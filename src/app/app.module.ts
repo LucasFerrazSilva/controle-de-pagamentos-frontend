@@ -43,6 +43,9 @@ import { DialogHorasExtrasComponent } from './horas-extras/dialog-horas-extras/d
 import { PrestadoresComponent } from './prestadores/prestadores.component';
 import { NovoPrestadorDialogComponent } from './prestadores/novo-prestador-dialog/novo-prestador-dialog.component';
 import { RoleLabelPipe } from './commons/pipes/role-label.pipe';
+import { NotasFiscaisComponent } from './notas-fiscais/notas-fiscais.component';
+import { DialogNotasFiscaisComponent } from './notas-fiscais/dialog-notas-fiscais/dialog-notas-fiscais.component';
+import { MonthNamePipePipe } from './commons/pipes/month-name-pipe.pipe';
 import { NovaSenhaDialogComponent } from './prestadores/nova-senha-dialog/nova-senha-dialog.component';
 
 @NgModule({
@@ -63,6 +66,9 @@ import { NovaSenhaDialogComponent } from './prestadores/nova-senha-dialog/nova-s
     PrestadoresComponent,
     NovoPrestadorDialogComponent,
     RoleLabelPipe,
+    NotasFiscaisComponent,
+    DialogNotasFiscaisComponent,
+    MonthNamePipePipe,
     NovaSenhaDialogComponent,
   ],
   imports: [

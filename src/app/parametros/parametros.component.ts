@@ -61,7 +61,7 @@ export class ParametrosComponent implements OnInit {
     let paginationParameters: PaginationParameters = {
       size: this.paginator.pageSize,
       page: this.paginator.pageIndex,
-      sort: ``
+      sort: `${this.sort.active},${this.sort.direction}`
     };
 
     this.parametrosService.list(this.filtros, paginationParameters).subscribe({
@@ -80,17 +80,14 @@ export class ParametrosComponent implements OnInit {
     this.paginator.pageSize = page.pageable.pageSize;
   }
 
-  editar(parametroDTO: ParametroDTO) {
-    let dialogRef = this.dialog.open(NovoParametroComponent, {
-      data: parametroDTO
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+  editar(parametroDTO : ParametroDTO | null = null) {
+    const dialogRef = this.dialog.open(NovoParametroComponent, { data: { parametroDTO } });
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if(confirmed) {
         this.list();
-      } 
+        this.messageDisplayerService.emit({message: 'Parametro salvo com sucesso', messageType: MessageType.SUCCESS});
+      }
     });
-    this.list();
   }
 
 }
