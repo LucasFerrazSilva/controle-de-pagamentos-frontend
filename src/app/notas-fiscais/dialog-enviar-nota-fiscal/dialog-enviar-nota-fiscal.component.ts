@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NotasFiscaisService } from '../notas-fiscais.service';
 import { MessageDisplayerService } from 'src/app/commons/message-displayer/message-displayer.service';
 import { LoadingService } from 'src/app/commons/loading/loading.service';
@@ -16,6 +16,7 @@ export class DialogEnviarNotaFiscalComponent implements OnInit {
   formGroup!: FormGroup;
   selectedFile!: File;
   fileName = '';
+  idNotaFiscal!: number;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -23,7 +24,12 @@ export class DialogEnviarNotaFiscalComponent implements OnInit {
     private service: NotasFiscaisService,
     private messageDisplayerService: MessageDisplayerService,
     private loadingService: LoadingService,
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { 
+    if(data.id){
+      this.idNotaFiscal = data.id;
+    }
+  }
 
 
   ngOnInit() {
@@ -54,7 +60,7 @@ export class DialogEnviarNotaFiscalComponent implements OnInit {
 
     this.loadingService.emit(true);
     
-    this.service.enviarNotaFiscal(formData).subscribe({
+    this.service.enviarNotaFiscal(this.idNotaFiscal, formData).subscribe({
       next: resp => this.handleSuccess(resp),
       error: error => this.handleError(error),
       complete: () => this.loadingService.emit(false)

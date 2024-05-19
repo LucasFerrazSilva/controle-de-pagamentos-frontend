@@ -181,8 +181,8 @@ export class NotasFiscaisComponent {
       }
     });
   }
-  enviarNotaFiscal(){
-    const dialogRef = this.dialog.open(DialogEnviarNotaFiscalComponent);
+  enviarNotaFiscal(item: NotaFiscal){
+    const dialogRef = this.dialog.open(DialogEnviarNotaFiscalComponent, { data: { idNotaFiscal: item.id }});
     dialogRef.afterClosed().subscribe(confirmed =>{
       this.list();
     });

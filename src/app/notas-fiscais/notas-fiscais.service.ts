@@ -56,9 +56,9 @@ export class NotasFiscaisService {
     return this.http.put(endpoint, {});
   }
 
-  enviarNotaFiscal(formData: FormData){
-    const endpoint = ENDPOINT + `/upload`;
-    return this.http.post(endpoint, formData);
+  enviarNotaFiscal(id: number, formData: FormData){
+    const endpoint = ENDPOINT + `/upload/${id}`;
+    return this.http.put(endpoint, formData);
   }
 }
 
