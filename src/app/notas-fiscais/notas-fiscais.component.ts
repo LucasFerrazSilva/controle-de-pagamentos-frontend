@@ -174,19 +174,26 @@ export class NotasFiscaisComponent {
       if (confirmed) {
         this.loadingService.emit(true);
         this.service.marcarComoPaga(item.id).subscribe({
-          next: resp => this.handleSuccessDelete(resp),
+          next: resp => this.handleSuccessPaid(resp),
           error: error => this.handleErrorDelete(error),
           complete: () => this.loadingService.emit(false)
         });
       }
     });
   }
+
+  handleSuccessPaid(resp: Object): void {
+    this.messageDisplayerService.emit({ message: 'Nota fiscal salva como paga', messageType: MessageType.SUCCESS });
+    this.list();
+  }
+
   enviarNotaFiscal(item: NotaFiscal) {
     const dialogRef = this.dialog.open(DialogEnviarNotaFiscalComponent, { data: { idNotaFiscal: item.id } });
     dialogRef.afterClosed().subscribe(confirmed => {
       this.list();
     });
   }
+  
   baixarNotaFiscal(item: NotaFiscal) {
     this.service.baixarNotaFiscal(item.id).subscribe({
       next: response => {
